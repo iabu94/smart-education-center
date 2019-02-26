@@ -1,0 +1,82 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cyber School</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="~/scripts/jquery.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Add a gray background color and some padding to the footer */
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img style="height:30px" src="~/Images/logo.png" /></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Index", "Exams")"><span class="glyphicon"></span> Back </a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Thilina </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="jumbotron">
+        <div class="container text-center">
+            <div class="row text-center">
+                <div class="col-sm-4">
+                    <h3>Grade @TempData["gradeID"]</h3>
+                </div>
+                <h1>Select Your Subject</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-3 text-center">
+        <div class="row">
+            @for (int i = 0; i < 9; i++)
+            {
+                <div class="col-sm-6 ">
+                    <br>
+                    <button type="button" style="width:100%;" class="btn btn-default"><h1>Subject @(i + 1)</h1></button><br />
+                </div>
+            }
+        </div><br /><br /><br /><br /><br /><br />
+    </div>
+    <footer class="container-fluid text-center navbar-fixed-bottom">
+        <p>SMART EDUCATION CENTER</p>
+    </footer>
+
+</body>
+</html>
