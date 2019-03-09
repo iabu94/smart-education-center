@@ -1,41 +1,83 @@
 create table Grade(
-	GradeID int primary key identity(1,1),
+	Id int primary key identity(1,1),
 	Grade int,
 	GradeDescription varchar(100),
 	IsDeleted int
 );
 
 create table Subject(
-	SubjectID int primary key identity(1,1),
+	Id int primary key identity(1,1),
 	SubjectCode varchar(10),
 	SubjectName varchar(50),
 	SubjectDescription varchar(100),
-	IsDeleted int
-);
-
-create table ExamPaper(
-	PaperID int primary key identity(1,1),
-	PaperCode varchar(10),
-	PaperName varchar(200),
-	PaperPart int,
-	PaperDuration int,
-	PaperDescription varchar(100),
 	IsActive int,
 	IsDeleted int
 );
 
+create table GradeVsSubject(
+	Id int primary key identity(1,1),
+	GradeId int,
+	SubjectId int,
+
+	CONSTRAINT FK_Grade FOREIGN KEY (GradeId) REFERENCES Grade (Id),
+	CONSTRAINT FK_Subject FOREIGN KEY (SubjectId) REFERENCES Subject (Id)
+);
+
+create table Test(
+	Id int primary key identity(1,1),
+	GradeSubjectId int,
+	TestCode varchar(10),
+	TestName varchar(200),
+	PaperPart int,
+	DurationInMinutes int,
+	TestDescription varchar(100),
+	IsActive int,
+	IsDeleted int,
+
+	CONSTRAINT FK_GradeSubject FOREIGN KEY (GradeSubjectId) REFERENCES GradeVsSubject (Id)
+);
+
 create table Question(
-	QuestionID int primary key identity(1,1),
+	Id int primary key identity(1,1),
+	TestId int,
 	QuestionNumber int,
 	Question varchar(max),
 	CorrectAnswer int,
-	IsDeleted int
+	IsActive int,
+	IsDeleted int,
+
+	CONSTRAINT FK_TestQuestion FOREIGN KEY (TestId) REFERENCES Test(Id)
 );
 
 create table Choice(
-	ChoiceID int primary key identity(1,1),
-	QuestionNumber int,
-	Question varchar(max),
-	Answer int,
+	Id int primary key identity(1,1),
+	QuestionId int,
+	ChoiceLabel varchar(max),
+	IsActive int,
 	IsDeleted int
+
+	CONSTRAINT FK_QuestionChoice FOREIGN KEY (QuestionId) REFERENCES Question(Id)
+);
+
+create table Student(
+	Id int primary key identity(1,1),
+	StudentNumber varchar(20),
+	FirstName varchar(50),
+	LastName varchar(50),
+	RegisteredDate date,
+	username varchar(50),
+	passHash varchar(50)
+);
+
+create table TestEntry(
+	Id int primary key identity(1,1),
+	StudentID int,
+	TestID int,
+	EntryDateTime datetime,
+	Token varchar(50),
+	TokenExpireTime datetime,
+	TotalMarks int,
+
+	CONSTRAINT FK_TestEntryStudent FOREIGN KEY (StudentID) REFERENCES Student(Id),
+	CONSTRAINT FK_TestEntryTest FOREIGN KEY (TestID) REFERENCES Test(Id)
 );
