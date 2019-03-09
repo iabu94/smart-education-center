@@ -19,5 +19,10 @@ namespace smart_education_center.Controllers
             TempData["gradeID"] = gradeID;
             return View();
         }
+
+        public ActionResult ViewQuestion()
+        {
+            return View();
+        }
     }
 }

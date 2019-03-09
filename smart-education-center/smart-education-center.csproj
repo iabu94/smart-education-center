@@ -125,6 +125,7 @@
     <Content Include="Content\Plugins\OwlCarousel\owl.theme.default.css" />
     <Content Include="Content\Styles\responsive.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\bg6.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\phone-call.svg" />
     <Content Include="Images\slider_background.jpg" />
@@ -150,6 +151,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Exams\Index.cshtml" />
     <Content Include="Views\Exams\SubjectView.cshtml" />
+    <Content Include="Views\Exams\ViewQuestion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
