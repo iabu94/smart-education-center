@@ -61,17 +61,16 @@
         <div class="row">
             @for (int i = 0; i < 8; i++)
             {
-                <div class="col-sm-3">
+                <div class="col-xs-6 col-md-3">
                     <br>
-                    <a href="@Url.Action("SubjectView", "Exams", new { gradeID = i })" class="btn btn-default" style="width:100%; height:150px;"><h1 style="padding-top:25px">Grade @(i + 1)</h1></a>
+                    <a href="@Url.Action("SubjectView", "Exams", new { gradeID = i })" class="btn btn-default" style="border-radius:12px; width:100%; height:150px; border:1px solid black;" onmouseenter="style.borderColor = 'red'" onmouseleave="style.borderColor = 'black'"><h1 style="padding-top:25px">Grade @(i + 1)</h1></a>
                     @*<button type="button" style="width:100%; height:150px;" class="btn btn-default"><h1>Grade @(i + 1)</h1></button><br />*@
                 </div>
             }
         </div>
     </div><br /><br /><br /><br /><br /><br />
     <footer class="container-fluid text-center navbar-fixed-bottom">
-        <p>SMART EDUCATION CENTER</p>
+        <p>Smart Education Center</p>
     </footer>
-
 </body>
 </html>

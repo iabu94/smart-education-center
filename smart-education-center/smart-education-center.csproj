@@ -150,6 +150,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Exams\Index.cshtml" />
     <Content Include="Views\Exams\SubjectView.cshtml" />
+    <Content Include="Views\Exams\PaperView.cshtml" />
+    <Content Include="Views\Exams\QuestionView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
