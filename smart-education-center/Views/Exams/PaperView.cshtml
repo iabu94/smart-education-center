@@ -1,8 +1,9 @@
 ﻿
 @{
     Layout = null;
-    ViewBag.Title = "SubjectView";
+    ViewBag.Title = "PaperView";
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +46,7 @@
                     <li><a href="#">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="@Url.Action("Index", "Exams")"><span class="glyphicon"></span> Back </a></li>
+                    <li><a href="@Url.Action("SubjectView", "Exams", new { gradeID= Session["GradeID"] })"><span class="glyphicon"></span> Back </a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Thilina </a></li>
                 </ul>
             </div>
@@ -56,33 +57,43 @@
         <div class="container text-center">
             <br />
             <div class="row">
-                <div class="col-xs-3" style="border:groove; border-radius:12px;">
-                    <h3>Grade @Session["GradeID"]</h3>
+                <div class="col-xs-3 col-sm-3" style="border:groove; border-radius:12px;">
+                    <h3 style="font-size:2vw">Grade @Session["GradeID"]</h3>
                 </div>
-                <div class="col-xs-6">
-                    <h1>Select Your Subject</h1>
+                <div class="col-xs-6 col-sm-6">
+                    <h1 style="font-size:3vw">Select Your Paper</h1>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-3 col-sm-3" style="border:groove; border-radius:12px;">
+                    <h3 style="font-size:2vw">Sabject @Session["SubjectID"]</h3>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container-fluid bg-3 text-center">
-        <div class="row">
-            @for (int i = 0; i < 9; i++)
-            {
-                <div class="col-xs-6 ">
-                    <br>
-                    <a href="@Url.Action("PaperView", "Exams", new { subjectID = i })" class="btn btn-default" style="border-radius:12px; width:100%; border:1px solid black;" onmouseenter="style.borderColor = 'red'" onmouseleave="style.borderColor = 'black'"><h3>Subject @(i + 1)</h3></a>
+
+        @for (int i = 0; i < 9; i++)
+        {
+            <div class="row">
+                <div class="col-xs-1 col-sm-1">
+                </div>
+                <div class="col-xs-10 col-sm-6 text-center" style="border-radius:12px; border:1px solid black;" id="paper@(i)">
+                    <a class="btn btn-lg disabled" style="color:black; height:40px;">Paper type @(i + 1)</a>
                     @*<button type="button" style="width:100%;" class="btn btn-default"><h3>Subject @(i + 1)</h3></button><br />*@
                 </div>
-            }
-        </div><br /><br /><br /><br /><br /><br />
-    </div>
-    <footer class="container-fluid text-center navbar-fixed-bottom">
+                <div class="col-xs-4 col-xs-offset-2 col-sm-2 col-sm-offset-0">
+                    <a href="@Url.Action("QuestionView", "Exams", new { paperID = i })" class="btn btn-default" style="border-radius:12px; width:100%; height:40px; border:1px solid black;" onmouseenter="style.borderColor = 'red'; getElementById('paper@(i)').style.borderColor = 'red';" onmouseleave="style.borderColor = 'black'; getElementById('paper@(i)').style.borderColor = 'black';">Paper I</a>
+                </div>
+                <div class="col-xs-4 col-sm-2">
+                    <a href="@Url.Action("QuestionView", "Exams", new { paperID = i+100 })" class="btn btn-default" style="border-radius:12px; width:100%; height:40px; border:1px solid black;" onmouseenter="style.borderColor = 'red'; getElementById('paper@(i)').style.borderColor = 'red';" onmouseleave="style.borderColor = 'black'; getElementById('paper@(i)').style.borderColor = 'black';">Paper II</a>
+                </div>
+                <div class="col-xs-2 col-sm-1">
+                </div>
+            </div><br />
+        }
+    </div><br /><br /><br />
+    <footer class="container-fluid text-center navbar-fixed-bottom" style="height:50px;">
         <p>Smart Education Center</p>
     </footer>
-
 </body>
 </html>
