@@ -47,5 +47,10 @@ namespace smart_education_center.Controllers
             Session["PaperID"] = paperID;
             return View();
         }
+
+        public ActionResult ViewQuestion()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "ViewQuestion";
+    var endTime = DateTime.UtcNow.AddSeconds(70);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+}
+
+<body style="background-color:#cee0ff">
+    <div>Time Remaining : <span id="minRemaining"></span> : <span id="secRemaining"></span></div>
+</body>
+
+<script>
+
+    function startTick() {
+
+        var remSeconds = @timeRemaining;
+        var secCounter = remSeconds%60;
+
+        function formatNumber(number){
+            if (number<10) {
+                return '0'+number;
+            }
+            else {
+                return ''+number;
+            }
+        }
+
+        document.getElementById('secRemaining').innerText = formatNumber(secCounter);
+        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+
+        var _tick = setInterval(function(){
+            remSeconds = remSeconds-1;
+            secCounter = secCounter-1;
+            document.getElementById('secRemaining').innerText = formatNumber(secCounter);
+            document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+            if (secCounter==0) {
+                secCounter=60;
+            }
+        },1000);
+    }
+    startTick();
+
+</script>
