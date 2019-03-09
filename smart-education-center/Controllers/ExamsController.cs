@@ -52,5 +52,10 @@ namespace smart_education_center.Controllers
         {
             return View();
         }
+
+        public ActionResult ViewQuestion()
+        {
+            return View();
+        }
     }
 }

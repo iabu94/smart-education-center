@@ -152,8 +152,12 @@
     <Content Include="Views\Exams\Index.cshtml" />
     <Content Include="Views\Exams\SubjectView.cshtml" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Views\Exams\PaperView.cshtml" />
     <Content Include="Views\Exams\QuestionView.cshtml" />
+=======
+    <Content Include="Views\Exams\ViewQuestion.cshtml" />
+>>>>>>> 689105ffbc76c40b9ab19e176541fbf1c35ff8c4
 =======
     <Content Include="Views\Exams\ViewQuestion.cshtml" />
 >>>>>>> 689105ffbc76c40b9ab19e176541fbf1c35ff8c4
