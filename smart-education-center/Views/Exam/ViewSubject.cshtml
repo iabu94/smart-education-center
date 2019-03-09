@@ -1,7 +1,7 @@
 ﻿
 @{
     Layout = null;
-    ViewBag.Title = "Index";
+    ViewBag.Title = "SubjectView";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +45,7 @@
                     <li><a href="#">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Index", "Exams")"><span class="glyphicon"></span> Back </a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Thilina </a></li>
                 </ul>
             </div>
@@ -53,24 +54,35 @@
 
     <div class="jumbotron">
         <div class="container text-center">
-            <h1>Select Your Grade</h1>
+            <br />
+            <div class="row">
+                <div class="col-xs-3" style="border:groove; border-radius:12px;">
+                    <h3>Grade @Session["GradeID"]</h3>
+                </div>
+                <div class="col-xs-6">
+                    <h1>Select Your Subject</h1>
+                </div>
+                <div class="col-xs-3">
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="container-fluid bg-3 text-center">
         <div class="row">
-            @for (int i = 0; i < 8; i++)
+            @for (int i = 0; i < 9; i++)
             {
-                <div class="col-xs-6 col-md-3">
+                <div class="col-xs-6 ">
                     <br>
-                    <a href="@Url.Action("SubjectView", "Exams", new { gradeID = i })" class="btn btn-default" style="border-radius:12px; width:100%; height:150px; border:1px solid black;" onmouseenter="style.borderColor = 'red'" onmouseleave="style.borderColor = 'black'"><h1 style="padding-top:25px">Grade @(i + 1)</h1></a>
-                    @*<button type="button" style="width:100%; height:150px;" class="btn btn-default"><h1>Grade @(i + 1)</h1></button><br />*@
+                    <a href="@Url.Action("ViewPaper", "Exam", new { subjectID = i })" class="btn btn-default" style="border-radius:12px; width:100%; border:1px solid black;" onmouseenter="style.borderColor = 'red'" onmouseleave="style.borderColor = 'black'"><h3>Subject @(i + 1)</h3></a>
+                    @*<button type="button" style="width:100%;" class="btn btn-default"><h3>Subject @(i + 1)</h3></button><br />*@
                 </div>
             }
-        </div>
-    </div><br /><br /><br /><br /><br /><br />
+        </div><br /><br /><br /><br /><br /><br />
+    </div>
     <footer class="container-fluid text-center navbar-fixed-bottom">
         <p>Smart Education Center</p>
     </footer>
+
 </body>
 </html>

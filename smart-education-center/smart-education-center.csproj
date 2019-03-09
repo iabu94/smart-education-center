@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ExamsController.cs" />
+    <Compile Include="Controllers\ExamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -149,18 +149,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Exams\Index.cshtml" />
-    <Content Include="Views\Exams\SubjectView.cshtml" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <Content Include="Views\Exams\PaperView.cshtml" />
-    <Content Include="Views\Exams\QuestionView.cshtml" />
-=======
-    <Content Include="Views\Exams\ViewQuestion.cshtml" />
->>>>>>> 689105ffbc76c40b9ab19e176541fbf1c35ff8c4
-=======
-    <Content Include="Views\Exams\ViewQuestion.cshtml" />
->>>>>>> 689105ffbc76c40b9ab19e176541fbf1c35ff8c4
+    <Content Include="Views\Exam\Index.cshtml" />
+    <Content Include="Views\Exam\ViewSubject.cshtml" />
+    <Content Include="Views\Exam\ViewPaper.cshtml" />
+    <Content Include="Views\Exam\ViewQuestion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

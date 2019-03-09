@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace smart_education_center.Controllers
 {
-    public class ExamsController : Controller
+    public class ExamController : Controller
     {
         // GET: Exams
         public ActionResult Index()
@@ -22,39 +22,29 @@ namespace smart_education_center.Controllers
             return View();
         }
 
-        public ActionResult SubjectView(int gradeID)
+        public ActionResult ViewSubject(int gradeID)
         {
             Session["GradeID"] = gradeID;
             return View();
         }
 
-        public ActionResult PaperView(int subjectID)
+        public ActionResult ViewPaper(int subjectID)
         {
             if (Session["GradeID"] == null)
             {
-                return RedirectToAction("Index", "Exams");
+                return RedirectToAction("Index", "Exam");
             }
             Session["SubjectID"] = subjectID;
             return View();
         }
 
-        public ActionResult QuestionView(int paperID)
+        public ActionResult ViewQuestion(int paperID)
         {
             if (Session["GradeID"] == null || Session["SubjectID"] ==null)
             {
-                return RedirectToAction("Index", "Exams");
+                return RedirectToAction("Index", "Exam");
             }
             Session["PaperID"] = paperID;
-            return View();
-        }
-
-        public ActionResult ViewQuestion()
-        {
-            return View();
-        }
-
-        public ActionResult ViewQuestion()
-        {
             return View();
         }
     }
