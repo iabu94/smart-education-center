@@ -127,6 +127,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Content\css\all.min.css" />
+    <Content Include="Areas\Admin\Content\css\dataTables.bootstrap4.css" />
+    <Content Include="Areas\Admin\Content\css\sb-admin.css" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.svg" />
+    <Content Include="Areas\Admin\scripts\bootstrap.bundle.min.js" />
+    <Content Include="Areas\Admin\scripts\dataTables.bootstrap4.js" />
+    <Content Include="Areas\Admin\scripts\jquery.dataTables.js" />
+    <Content Include="Areas\Admin\scripts\jquery.easing.min.js" />
+    <Content Include="Areas\Admin\scripts\jquery.min.js" />
+    <Content Include="Areas\Admin\scripts\sb-admin.min.js" />
     <Content Include="Content\Styles\bootstrap.min.css" />
     <Content Include="Content\Styles\main_styles.css" />
     <Content Include="Content\Plugins\fontawesome-5.0.1\fontawesome-all.css" />
@@ -153,6 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\OpenExcelViewModel.cs" />
     <Compile Include="Controllers\ExamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -219,6 +234,21 @@
     <Content Include="Models\CyberSchoolEntityModel.edmx.diagram">
       <DependentUpon>CyberSchoolEntityModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.woff2" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.woff2" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -228,12 +258,42 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\ExamPapers\" />
     <Folder Include="fonts\" />
     <Folder Include="scripts\" />
     <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

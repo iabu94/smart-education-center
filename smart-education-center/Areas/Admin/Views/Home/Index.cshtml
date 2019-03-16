@@ -1,0 +1,118 @@
+﻿@model smart_education_center.Areas.Admin.Models.OpenExcelViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="~/Areas/Admin/Content/css/dataTables.bootstrap4.css" />
+
+<div id="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Home</li>
+        </ol>
+        @Html.HiddenFor(x => x.QuestionTable)
+        <div class="row">
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="col-sm-12">
+                    @Html.HiddenFor(Model => Model.QuestionTable)
+                    @Html.LabelFor(x => x.ExcelPaperFile, "Upload Question Paper with an Excel file :")
+                    @Html.TextBoxFor(x => x.ExcelPaperFile, new { type = "file", @class = "required" })
+
+                    @if (Model.QuestionTable != null)
+                    {
+                        <input type="button" value="Finish Upload" class="btn btn-primary" onclick="location.href='@Url.Action("StoreQuestions","Home",Model.QuestionTable)'"/>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btn-primary" type="submit">Upload</button>
+                    }
+                    
+                    @Html.Raw("<div class=\"text-danger\">" + TempData["ErrorMessage"] + "</div>")
+                </div>
+
+            }
+
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Uploaded Questions
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Lesson</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Lesson</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @if (Model.QuestionTable != null)
+                            {
+
+                                foreach (System.Data.DataRow row in Model.QuestionTable.Rows)
+                                {
+                                    <tr>
+                                        <td>
+                                            @row.ItemArray[0]
+                                        </td>
+                                        <td>
+                                            @row.ItemArray[1]
+                                            <br />
+                                            <ul>
+                                                <li>@row.ItemArray[2] </li>
+                                                <li>@row.ItemArray[3]</li>
+                                                <li>@row.ItemArray[4]</li>
+                                                <li>@row.ItemArray[5]</li>
+                                            </ul>
+                                            
+                                        </td>
+                                        <td>
+                                            @row.ItemArray[6]
+                                        </td>
+                                        <td>
+                                            @row.ItemArray[7]
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+    <!-- Sticky Footer -->
+    <footer class="sticky-footer">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright © Your Website 2019</span>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="~/Areas/Admin/scripts/jquery.dataTables.js"></script>
+<script src="~/Areas/Admin/scripts/dataTables.bootstrap4.js"></script>
