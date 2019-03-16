@@ -12,27 +12,21 @@ namespace smart_education_center.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Question
+    public partial class Lesson
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Question()
+        public Lesson()
         {
-            this.Choice = new HashSet<Choice>();
+            this.Question = new HashSet<Question>();
         }
     
         public int Id { get; set; }
-        public Nullable<int> TestId { get; set; }
-        public Nullable<int> LessonId { get; set; }
-        public Nullable<int> QuestionNumber { get; set; }
-        public string Question1 { get; set; }
-        public Nullable<int> CorrectAnswer { get; set; }
-        public Nullable<double> PointsOfQuestion { get; set; }
-        public Nullable<int> IsActive { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        public Nullable<int> GradeSubjectId { get; set; }
+        public string LessonName { get; set; }
+        public string LessonDescription { get; set; }
     
+        public virtual GradeVsSubject GradeVsSubject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Choice> Choice { get; set; }
-        public virtual Lesson Lesson { get; set; }
-        public virtual Test Test { get; set; }
+        public virtual ICollection<Question> Question { get; set; }
     }
 }

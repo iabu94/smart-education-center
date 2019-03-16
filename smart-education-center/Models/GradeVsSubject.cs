@@ -17,7 +17,8 @@ namespace smart_education_center.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GradeVsSubject()
         {
-            this.Tests = new HashSet<Test>();
+            this.Test = new HashSet<Test>();
+            this.Lesson = new HashSet<Lesson>();
         }
     
         public int Id { get; set; }
@@ -26,7 +27,9 @@ namespace smart_education_center.Models
     
         public virtual Grade Grade { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Test> Tests { get; set; }
+        public virtual ICollection<Test> Test { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lesson> Lesson { get; set; }
         public virtual Subject Subject { get; set; }
     }
 }

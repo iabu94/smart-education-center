@@ -17,7 +17,7 @@ namespace smart_education_center.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Student()
         {
-            this.TestEntries = new HashSet<TestEntry>();
+            this.TestEntry = new HashSet<TestEntry>();
         }
     
         public int Id { get; set; }
@@ -29,6 +29,6 @@ namespace smart_education_center.Models
         public string passHash { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TestEntry> TestEntries { get; set; }
+        public virtual ICollection<TestEntry> TestEntry { get; set; }
     }
 }
