@@ -21,6 +21,8 @@ namespace smart_education_center.Models
         public string Token { get; set; }
         public Nullable<System.DateTime> TokenExpireTime { get; set; }
         public Nullable<int> TotalMarks { get; set; }
+        public string RightAnswers { get; set; }
+        public string WrongAswers { get; set; }
     
         public virtual Student Student { get; set; }
         public virtual Test Test { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CyberSchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CyberSchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Choice">
           <Key>
             <PropertyRef Name="Id" />
@@ -32,15 +32,26 @@
           <Property Name="GradeId" Type="int" />
           <Property Name="SubjectId" Type="int" />
         </EntityType>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GradeSubjectId" Type="int" />
+          <Property Name="LessonName" Type="varchar" MaxLength="100" />
+          <Property Name="LessonDescription" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="Question">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TestId" Type="int" />
+          <Property Name="LessonId" Type="int" />
           <Property Name="QuestionNumber" Type="int" />
           <Property Name="Question" Type="varchar(max)" />
           <Property Name="CorrectAnswer" Type="int" />
+          <Property Name="PointsOfQuestion" Type="float" />
           <Property Name="IsActive" Type="int" />
           <Property Name="IsDeleted" Type="int" />
         </EntityType>
@@ -92,6 +103,8 @@
           <Property Name="Token" Type="varchar" MaxLength="50" />
           <Property Name="TokenExpireTime" Type="datetime" />
           <Property Name="TotalMarks" Type="int" />
+          <Property Name="RightAnswers" Type="varchar(max)" />
+          <Property Name="WrongAswers" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK_Grade">
           <End Role="Grade" Type="Self.Grade" Multiplicity="0..1" />
@@ -114,6 +127,30 @@
             </Principal>
             <Dependent Role="Test">
               <PropertyRef Name="GradeSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GradeVsSubject">
+          <End Role="GradeVsSubject" Type="Self.GradeVsSubject" Multiplicity="0..1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeVsSubject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="GradeSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="LessonId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -181,6 +218,7 @@
           <EntitySet Name="Choice" EntityType="Self.Choice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GradeVsSubject" EntityType="Self.GradeVsSubject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
@@ -193,6 +231,14 @@
           <AssociationSet Name="FK_GradeSubject" Association="Self.FK_GradeSubject">
             <End Role="GradeVsSubject" EntitySet="GradeVsSubject" />
             <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeVsSubject" Association="Self.FK_GradeVsSubject">
+            <End Role="GradeVsSubject" EntitySet="GradeVsSubject" />
+            <End Role="Lesson" EntitySet="Lesson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson" Association="Self.FK_Lesson">
+            <End Role="Lesson" EntitySet="Lesson" />
+            <End Role="Question" EntitySet="Question" />
           </AssociationSet>
           <AssociationSet Name="FK_QuestionChoice" Association="Self.FK_QuestionChoice">
             <End Role="Question" EntitySet="Question" />
@@ -215,7 +261,8 @@
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CyberSchoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -238,7 +285,7 @@
           <Property Name="Grade1" Type="Int32" />
           <Property Name="GradeDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IsDeleted" Type="Int32" />
-          <NavigationProperty Name="GradeVsSubjects" Relationship="Self.FK_Grade" FromRole="Grade" ToRole="GradeVsSubject" />
+          <NavigationProperty Name="GradeVsSubject" Relationship="Self.FK_Grade" FromRole="Grade" ToRole="GradeVsSubject" />
         </EntityType>
         <EntityType Name="GradeVsSubject">
           <Key>
@@ -248,8 +295,20 @@
           <Property Name="GradeId" Type="Int32" />
           <Property Name="SubjectId" Type="Int32" />
           <NavigationProperty Name="Grade" Relationship="Self.FK_Grade" FromRole="GradeVsSubject" ToRole="Grade" />
-          <NavigationProperty Name="Tests" Relationship="Self.FK_GradeSubject" FromRole="GradeVsSubject" ToRole="Test" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_GradeSubject" FromRole="GradeVsSubject" ToRole="Test" />
+          <NavigationProperty Name="Lesson" Relationship="Self.FK_GradeVsSubject" FromRole="GradeVsSubject" ToRole="Lesson" />
           <NavigationProperty Name="Subject" Relationship="Self.FK_Subject" FromRole="GradeVsSubject" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GradeSubjectId" Type="Int32" />
+          <Property Name="LessonName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LessonDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GradeVsSubject" Relationship="Self.FK_GradeVsSubject" FromRole="Lesson" ToRole="GradeVsSubject" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Lesson" FromRole="Lesson" ToRole="Question" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -257,12 +316,15 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TestId" Type="Int32" />
+          <Property Name="LessonId" Type="Int32" />
           <Property Name="QuestionNumber" Type="Int32" />
           <Property Name="Question1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CorrectAnswer" Type="Int32" />
+          <Property Name="PointsOfQuestion" Type="Double" />
           <Property Name="IsActive" Type="Int32" />
           <Property Name="IsDeleted" Type="Int32" />
-          <NavigationProperty Name="Choices" Relationship="Self.FK_QuestionChoice" FromRole="Question" ToRole="Choice" />
+          <NavigationProperty Name="Choice" Relationship="Self.FK_QuestionChoice" FromRole="Question" ToRole="Choice" />
+          <NavigationProperty Name="Lesson" Relationship="Self.FK_Lesson" FromRole="Question" ToRole="Lesson" />
           <NavigationProperty Name="Test" Relationship="Self.FK_TestQuestion" FromRole="Question" ToRole="Test" />
         </EntityType>
         <EntityType Name="Student">
@@ -276,7 +338,7 @@
           <Property Name="RegisteredDate" Type="DateTime" Precision="0" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="passHash" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TestEntries" Relationship="Self.FK_TestEntryStudent" FromRole="Student" ToRole="TestEntry" />
+          <NavigationProperty Name="TestEntry" Relationship="Self.FK_TestEntryStudent" FromRole="Student" ToRole="TestEntry" />
         </EntityType>
         <EntityType Name="Subject">
           <Key>
@@ -288,7 +350,7 @@
           <Property Name="SubjectDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Int32" />
           <Property Name="IsDeleted" Type="Int32" />
-          <NavigationProperty Name="GradeVsSubjects" Relationship="Self.FK_Subject" FromRole="Subject" ToRole="GradeVsSubject" />
+          <NavigationProperty Name="GradeVsSubject" Relationship="Self.FK_Subject" FromRole="Subject" ToRole="GradeVsSubject" />
         </EntityType>
         <EntityType Name="Test">
           <Key>
@@ -304,8 +366,8 @@
           <Property Name="IsActive" Type="Int32" />
           <Property Name="IsDeleted" Type="Int32" />
           <NavigationProperty Name="GradeVsSubject" Relationship="Self.FK_GradeSubject" FromRole="Test" ToRole="GradeVsSubject" />
-          <NavigationProperty Name="Questions" Relationship="Self.FK_TestQuestion" FromRole="Test" ToRole="Question" />
-          <NavigationProperty Name="TestEntries" Relationship="Self.FK_TestEntryTest" FromRole="Test" ToRole="TestEntry" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_TestQuestion" FromRole="Test" ToRole="Question" />
+          <NavigationProperty Name="TestEntry" Relationship="Self.FK_TestEntryTest" FromRole="Test" ToRole="TestEntry" />
         </EntityType>
         <EntityType Name="TestEntry">
           <Key>
@@ -317,9 +379,11 @@
           <Property Name="EntryDateTime" Type="DateTime" Precision="3" />
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TokenExpireTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalMarks" Type="Int32" />
+          <Property Name="RightAnswers" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WrongAswers" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Student" Relationship="Self.FK_TestEntryStudent" FromRole="TestEntry" ToRole="Student" />
           <NavigationProperty Name="Test" Relationship="Self.FK_TestEntryTest" FromRole="TestEntry" ToRole="Test" />
-          <Property Name="TotalMarks" Type="Int32" />
         </EntityType>
         <Association Name="FK_QuestionChoice">
           <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
@@ -357,6 +421,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GradeVsSubject">
+          <End Role="GradeVsSubject" Type="Self.GradeVsSubject" Multiplicity="0..1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeVsSubject">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="GradeSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Subject">
           <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
           <End Role="GradeVsSubject" Type="Self.GradeVsSubject" Multiplicity="*" />
@@ -366,6 +442,18 @@
             </Principal>
             <Dependent Role="GradeVsSubject">
               <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="LessonId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -406,41 +494,50 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CyberSchoolEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Choices" EntityType="Self.Choice" />
-          <EntitySet Name="Grades" EntityType="Self.Grade" />
-          <EntitySet Name="GradeVsSubjects" EntityType="Self.GradeVsSubject" />
-          <EntitySet Name="Questions" EntityType="Self.Question" />
-          <EntitySet Name="Students" EntityType="Self.Student" />
-          <EntitySet Name="Subjects" EntityType="Self.Subject" />
-          <EntitySet Name="Tests" EntityType="Self.Test" />
-          <EntitySet Name="TestEntries" EntityType="Self.TestEntry" />
+          <EntitySet Name="Choice" EntityType="Self.Choice" />
+          <EntitySet Name="Grade" EntityType="Self.Grade" />
+          <EntitySet Name="GradeVsSubject" EntityType="Self.GradeVsSubject" />
+          <EntitySet Name="Lesson" EntityType="Self.Lesson" />
+          <EntitySet Name="Question" EntityType="Self.Question" />
+          <EntitySet Name="Student" EntityType="Self.Student" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" />
+          <EntitySet Name="Test" EntityType="Self.Test" />
+          <EntitySet Name="TestEntry" EntityType="Self.TestEntry" />
           <AssociationSet Name="FK_QuestionChoice" Association="Self.FK_QuestionChoice">
-            <End Role="Question" EntitySet="Questions" />
-            <End Role="Choice" EntitySet="Choices" />
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Choice" EntitySet="Choice" />
           </AssociationSet>
           <AssociationSet Name="FK_Grade" Association="Self.FK_Grade">
-            <End Role="Grade" EntitySet="Grades" />
-            <End Role="GradeVsSubject" EntitySet="GradeVsSubjects" />
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="GradeVsSubject" EntitySet="GradeVsSubject" />
           </AssociationSet>
           <AssociationSet Name="FK_GradeSubject" Association="Self.FK_GradeSubject">
-            <End Role="GradeVsSubject" EntitySet="GradeVsSubjects" />
-            <End Role="Test" EntitySet="Tests" />
+            <End Role="GradeVsSubject" EntitySet="GradeVsSubject" />
+            <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeVsSubject" Association="Self.FK_GradeVsSubject">
+            <End Role="GradeVsSubject" EntitySet="GradeVsSubject" />
+            <End Role="Lesson" EntitySet="Lesson" />
           </AssociationSet>
           <AssociationSet Name="FK_Subject" Association="Self.FK_Subject">
-            <End Role="Subject" EntitySet="Subjects" />
-            <End Role="GradeVsSubject" EntitySet="GradeVsSubjects" />
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="GradeVsSubject" EntitySet="GradeVsSubject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson" Association="Self.FK_Lesson">
+            <End Role="Lesson" EntitySet="Lesson" />
+            <End Role="Question" EntitySet="Question" />
           </AssociationSet>
           <AssociationSet Name="FK_TestQuestion" Association="Self.FK_TestQuestion">
-            <End Role="Test" EntitySet="Tests" />
-            <End Role="Question" EntitySet="Questions" />
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Question" EntitySet="Question" />
           </AssociationSet>
           <AssociationSet Name="FK_TestEntryStudent" Association="Self.FK_TestEntryStudent">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="TestEntry" EntitySet="TestEntries" />
+            <End Role="Student" EntitySet="Student" />
+            <End Role="TestEntry" EntitySet="TestEntry" />
           </AssociationSet>
           <AssociationSet Name="FK_TestEntryTest" Association="Self.FK_TestEntryTest">
-            <End Role="Test" EntitySet="Tests" />
-            <End Role="TestEntry" EntitySet="TestEntries" />
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestEntry" EntitySet="TestEntry" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -449,7 +546,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CyberSchoolModelStoreContainer" CdmEntityContainer="CyberSchoolEntities">
-          <EntitySetMapping Name="Choices">
+          <EntitySetMapping Name="Choice">
             <EntityTypeMapping TypeName="CyberSchoolModel.Choice">
               <MappingFragment StoreEntitySet="Choice">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -460,7 +557,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Grades">
+          <EntitySetMapping Name="Grade">
             <EntityTypeMapping TypeName="CyberSchoolModel.Grade">
               <MappingFragment StoreEntitySet="Grade">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -470,7 +567,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="GradeVsSubjects">
+          <EntitySetMapping Name="GradeVsSubject">
             <EntityTypeMapping TypeName="CyberSchoolModel.GradeVsSubject">
               <MappingFragment StoreEntitySet="GradeVsSubject">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -479,20 +576,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Questions">
+          <EntitySetMapping Name="Lesson">
+            <EntityTypeMapping TypeName="CyberSchoolModel.Lesson">
+              <MappingFragment StoreEntitySet="Lesson">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GradeSubjectId" ColumnName="GradeSubjectId" />
+                <ScalarProperty Name="LessonName" ColumnName="LessonName" />
+                <ScalarProperty Name="LessonDescription" ColumnName="LessonDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question">
             <EntityTypeMapping TypeName="CyberSchoolModel.Question">
               <MappingFragment StoreEntitySet="Question">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
                 <ScalarProperty Name="QuestionNumber" ColumnName="QuestionNumber" />
                 <ScalarProperty Name="Question1" ColumnName="Question" />
                 <ScalarProperty Name="CorrectAnswer" ColumnName="CorrectAnswer" />
+                <ScalarProperty Name="PointsOfQuestion" ColumnName="PointsOfQuestion" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Students">
+          <EntitySetMapping Name="Student">
             <EntityTypeMapping TypeName="CyberSchoolModel.Student">
               <MappingFragment StoreEntitySet="Student">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -505,7 +614,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Subjects">
+          <EntitySetMapping Name="Subject">
             <EntityTypeMapping TypeName="CyberSchoolModel.Subject">
               <MappingFragment StoreEntitySet="Subject">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -517,7 +626,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tests">
+          <EntitySetMapping Name="Test">
             <EntityTypeMapping TypeName="CyberSchoolModel.Test">
               <MappingFragment StoreEntitySet="Test">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -532,16 +641,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TestEntries">
+          <EntitySetMapping Name="TestEntry">
             <EntityTypeMapping TypeName="CyberSchoolModel.TestEntry">
               <MappingFragment StoreEntitySet="TestEntry">
-                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="TestID" ColumnName="TestID" />
                 <ScalarProperty Name="EntryDateTime" ColumnName="EntryDateTime" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="TokenExpireTime" ColumnName="TokenExpireTime" />
+                <ScalarProperty Name="TotalMarks" ColumnName="TotalMarks" />
+                <ScalarProperty Name="RightAnswers" ColumnName="RightAnswers" />
+                <ScalarProperty Name="WrongAswers" ColumnName="WrongAswers" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -559,7 +670,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

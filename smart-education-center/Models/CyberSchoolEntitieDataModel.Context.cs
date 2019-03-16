@@ -25,13 +25,14 @@ namespace smart_education_center.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Choice> Choices { get; set; }
-        public virtual DbSet<Grade> Grades { get; set; }
-        public virtual DbSet<GradeVsSubject> GradeVsSubjects { get; set; }
-        public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<Subject> Subjects { get; set; }
-        public virtual DbSet<Test> Tests { get; set; }
-        public virtual DbSet<TestEntry> TestEntries { get; set; }
+        public virtual DbSet<Choice> Choice { get; set; }
+        public virtual DbSet<Grade> Grade { get; set; }
+        public virtual DbSet<GradeVsSubject> GradeVsSubject { get; set; }
+        public virtual DbSet<Lesson> Lesson { get; set; }
+        public virtual DbSet<Question> Question { get; set; }
+        public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<Subject> Subject { get; set; }
+        public virtual DbSet<Test> Test { get; set; }
+        public virtual DbSet<TestEntry> TestEntry { get; set; }
     }
 }

@@ -23,6 +23,15 @@ create table GradeVsSubject(
 	CONSTRAINT FK_Subject FOREIGN KEY (SubjectId) REFERENCES Subject (Id)
 );
 
+create table Lesson(
+	Id int primary key identity(1,1),
+	GradeSubjectId int,
+	LessonName varchar(100),
+	LessonDescription varchar(500),
+
+	CONSTRAINT FK_GradeVsSubject FOREIGN KEY (GradeSubjectId) REFERENCES GradeVsSubject(Id)
+);
+
 create table Test(
 	Id int primary key identity(1,1),
 	GradeSubjectId int,
@@ -40,13 +49,16 @@ create table Test(
 create table Question(
 	Id int primary key identity(1,1),
 	TestId int,
+	LessonId int,
 	QuestionNumber int,
 	Question varchar(max),
 	CorrectAnswer int,
+	PointsOfQuestion float,
 	IsActive int,
 	IsDeleted int,
 
-	CONSTRAINT FK_TestQuestion FOREIGN KEY (TestId) REFERENCES Test(Id)
+	CONSTRAINT FK_TestQuestion FOREIGN KEY (TestId) REFERENCES Test(Id),
+	CONSTRAINT FK_Lesson FOREIGN KEY (LessonId) REFERENCES Lesson(Id)
 );
 
 create table Choice(
@@ -77,6 +89,8 @@ create table TestEntry(
 	Token varchar(50),
 	TokenExpireTime datetime,
 	TotalMarks int,
+	RightAnswers varchar(max),
+	WrongAswers varchar(max)
 
 	CONSTRAINT FK_TestEntryStudent FOREIGN KEY (StudentID) REFERENCES Student(Id),
 	CONSTRAINT FK_TestEntryTest FOREIGN KEY (TestID) REFERENCES Test(Id)

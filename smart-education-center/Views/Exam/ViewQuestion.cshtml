@@ -1,8 +1,9 @@
-﻿
+﻿@model smart_education_center.Models.QuestionViewModel
 @{
     Layout = null;
     ViewBag.Title = "ViewQuestion";
-    var endTime = DateTime.UtcNow.AddSeconds(70);
+    int second = (int)Model.DurationInMinutes * 60;
+    var endTime = DateTime.UtcNow.AddSeconds(second);
     var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
 }
 
@@ -36,83 +37,97 @@
         <div class="container text-center">
             <div class="row">
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px; height:80px;">
-                    <h3 style="font-size:3vw">Grade @Session["GradeID"]</h3>
+                    <h3 style="font-size:2vw;">Grade @Session["Grade"]</h3>
                 </div>
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px;">
-                    <h3 style="font-size:2vw">Sabject @Session["SubjectID"]</h3>
+                    <h3 style="font-size:2vw;">@Session["SubjectName"]</h3>
                 </div>
                 <div class="col-xs-4 col-sm-4" style="border:groove; border-radius:12px;">
-                    <h3 style="font-size:2vw">Paper Name @Session["PaperID"]</h3>
+                    <h3 style="font-size:2vw;">@Model.TestName</h3>
                 </div>
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px;">
-                    <h3 style="font-size:2vw">Paper I</h3>
+
+                    @if (Model.PaperPart == 1)
+                    {
+                        <h3 style="font-size:2vw;">Paper I</h3>
+                    }
+                    else
+                    {
+                        <h3 style="font-size:2vw;">Paper II</h3>
+                    }
+
                 </div>
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px; height:80px;">
-                    <h3 style="font-size:3vw"><span id="minRemaining"></span> : <span id="secRemaining"></span></h3>
+                    <h3 style="font-size:2vw;"><span id="minRemaining"></span> : <span id="secRemaining"></span></h3>
                 </div>
             </div>
         </div>
     </div>
+
+@using (Html.BeginForm("PostAnswer", "Exam", FormMethod.Post, new { enctype = "multipart/form-data", @id="form" }))
+{
     <div class="container-fluid bg-3">
         <div class="row">
             <div class="col-sm-1"></div>
             <div class="col-xs-1 col-sm-1 text-center">
-                <h1 style="border:1px solid black; border-radius:12px; font-size:2vw;">10</h1>
+                <h1 style="border:1px solid black; border-radius:12px; font-size:2vw;">@Model.QuestionNumber</h1>
             </div>
             <div class="col-xs-11 col-sm-9" style="border-left:2px solid black;">
                 <div>
-                    Google News is a news aggregator and app developed by Google. It presents a continuous, customizable flow of articles organized from thousands of publishers and magazines. Google News is available on Android, iOS, and the web. A beta version was launched in September 2002, and released officially in January 2006. Wikipedia
+                    @Model.Question1
                     <br /><br />
                 </div>
+                @*<div class="text-center">
+                        Image
+                        <br /><br />
+                    </div>*@
                 <div style="border-top:2px solid black;">
                     <br />
-                    <div class="col-sm-6">
-                        <div>
-                            organized from thousands of publishers
+                        @foreach (var item in Model.CoiceVMList)
+                        {
+                            <div class="col-sm-6">
+                                <input type="radio" name="answer" /> @item.ChoiceLabel
+                                <br /><br />
+                            </div>
+                        }
+                    @*<div class="col-sm-6">
+                            <input type="radio" name="answer"/> organized from thousands of 1
                             <br /><br />
                         </div>
-                        <div>
-                            organized from thousands of publishers
+                        <div class="col-sm-6">
+                            <input type="radio" name="answer"/> organized from thousands of publishers2
                             <br /><br />
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div>
-                            organized from thousands of publishers
+                        <div class="col-sm-6">
+                            <input type="radio" name="answer"/> organized from thousands of publishers3
                             <br /><br />
-                        </div>
-                        <div>
-                            organized from thousands of publishers
-                            <br /><br />
-                        </div>
-                    </div>
+                        </div>*@
                 </div>
                 <div>
                     <div class="col-xs-1 col-sm-1" style="border-top:1px solid black;">
                         <br />
-                        <a class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;"><</a>
+                        <a href="javascript:void(0);" onclick="saveBackward(this);" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;"><</a>
                     </div>
-                    <div class="col-xs-8 col-sm-10" style="border-top:1px solid black;"></div>
-                    <div class="col-xs-2 col-sm-1" style="border-top:1px solid black;">
+                    <div class="col-xs-8 col-sm-10" style="border-top:1px solid black;">
                         <br />
-                        <a class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;">></a>
+                        @for (int i = 0; i < Model.QuestionCount; i++)
+                        {
+                            <div class="col-xs-2 col-sm-1">
+                                <a href="@Url.Action("ViewQuestion", "Exam", new { paperID = Model.TestId, questionNumber = i + 1 })" class="btn btn-default" style="color:black;border:1px solid black;" onmouseenter="style.borderColor = 'Blue';" id="btnID@(i + 1)">@(i + 1)</a>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-xs-2 col-sm-1" style="border-top:1px solid black;"> 
+                        <br />
+                        <a href="javascript:void(0);" onclick="saveForward(this);" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;">></a>
                     </div>
                 </div>
             </div>
         </div>
         <br />
-        <div class="row" style="border-top:1px solid black;">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-10">
-                @for (int i = 0; i < 30; i++)
-                {
-                    <div class="col-xs-1 col-sm-1">
-                        <a class="btn btn-default" style="color:black;border:none;">@(i + 1)</a>
-                    </div>
-                }
-            </div>
-        </div>
+
     </div><br /><br /><br />
+}
     <footer class="container-fluid text-center navbar-fixed-bottom" style="height:50px;">
         <p>Smart Education Center</p>
     </footer>

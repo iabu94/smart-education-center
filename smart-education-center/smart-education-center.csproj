@@ -151,15 +151,15 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\phone-call.svg" />
     <Content Include="Images\slider_background.jpg" />
-    <Content Include="Models\CyberSchoolEntityModel.Context.tt">
+    <Content Include="Models\CyberSchoolEntitieDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CyberSchoolEntityModel.edmx</DependentUpon>
-      <LastGenOutput>CyberSchoolEntityModel.Context.cs</LastGenOutput>
+      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
+      <LastGenOutput>CyberSchoolEntitieDataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\CyberSchoolEntityModel.tt">
+    <Content Include="Models\CyberSchoolEntitieDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CyberSchoolEntityModel.edmx</DependentUpon>
-      <LastGenOutput>CyberSchoolEntityModel.cs</LastGenOutput>
+      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
+      <LastGenOutput>CyberSchoolEntitieDataModel.cs</LastGenOutput>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>
@@ -170,48 +170,61 @@
     <Compile Include="Areas\Admin\Models\OpenExcelViewModel.cs" />
     <Compile Include="Controllers\ExamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Choice.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CyberSchoolEntityModel.Context.cs">
+    <Compile Include="Models\ChoiceViewModel.cs" />
+    <Compile Include="Models\CyberSchoolEntitieDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CyberSchoolEntityModel.Context.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CyberSchoolEntityModel.cs">
+    <Compile Include="Models\CyberSchoolEntitieDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CyberSchoolEntityModel.Designer.cs">
+    <Compile Include="Models\CyberSchoolEntitieDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CyberSchoolEntityModel.edmx</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Grade.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GradeViewModel.cs" />
     <Compile Include="Models\GradeVsSubject.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GradeVsSubjectViewModel.cs" />
+    <Compile Include="Models\Lesson.cs">
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LessonViewModel.cs" />
     <Compile Include="Models\Question.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\Student.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\Subject.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Models\Test.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestEntry.cs">
-      <DependentUpon>CyberSchoolEntityModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestEntryViewModel.cs" />
+    <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -227,13 +240,14 @@
     <Content Include="Views\Exam\ViewSubject.cshtml" />
     <Content Include="Views\Exam\ViewPaper.cshtml" />
     <Content Include="Views\Exam\ViewQuestion.cshtml" />
-    <EntityDeploy Include="Models\CyberSchoolEntityModel.edmx">
+    <EntityDeploy Include="Models\CyberSchoolEntitieDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CyberSchoolEntityModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>CyberSchoolEntitieDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\CyberSchoolEntityModel.edmx.diagram">
-      <DependentUpon>CyberSchoolEntityModel.edmx</DependentUpon>
+    <Content Include="Models\CyberSchoolEntitieDataModel.edmx.diagram">
+      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
     </Content>
+<<<<<<< HEAD
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.eot" />
@@ -249,6 +263,9 @@
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff" />
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+=======
+    <Content Include="Views\Login\Index.cshtml" />
+>>>>>>> df53061f170f101ccb60ffd884d26b930d775c78
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
