@@ -10,11 +10,14 @@ using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.IO;
 using System.Data;
+using smart_education_center.Models;
+using static smart_education_center.Common.Enum;
 
 namespace smart_education_center.Areas.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class AdminHomeController : Controller
     {
+        private CyberSchoolEntities _context = new CyberSchoolEntities();
         _Application excel = new _Excel.Application();
         Workbook wb;
         Worksheet ws;
@@ -82,7 +85,52 @@ namespace smart_education_center.Areas.Admin.Controllers
 
                     model.QuestionTable = dt;
 
+                    Test testModel = new Test();
+                    testModel.GradeVsSubject = _context.GradeVsSubject.Where(x => x.Grade.Grade1 == model.Grade && x.Subject.SubjectName == model.Subject).FirstOrDefault();
+                    testModel.TestCode = DateTime.Now.ToString("yyMMddhhmm");
+                    testModel.TestName = model.PaperName;
+                    testModel.PaperPart = model.PaperPart;
+                    testModel.DurationInMinutes = model.PaperTime;
+                    testModel.IsActive = 1;
+                    testModel.IsDeleted = 0;
 
+                    testModel.TestDescription = "x";
+
+                    _context.Test.Add(testModel);
+                    _context.SaveChanges();
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        Question question = new Question();
+                        question.TestId = testModel.Id;
+                        question.QuestionNumber = Convert.ToInt32(row["Question Number"]);
+                        question.Question1 = row["Question"].ToString();
+                        question.IsActive = (int)IsActive.YES;
+                        question.IsDeleted = (int)IsDeleted.NO;
+
+                        _context.Question.Add(question);
+                        _context.SaveChanges();
+
+                        for (int i = 1; i < 5; i++)
+                        {
+                            Choice choices = new Choice();
+
+                            choices.QuestionId = question.Id;
+                            choices.ChoiceLabel = row["Choice " + i].ToString();
+                            choices.ChoiceNumber = i;
+                            choices.IsActive = 1;
+                            choices.IsDeleted = 0;
+
+                            _context.Choice.Add(choices);
+                            _context.SaveChanges();
+                            if (choices.ChoiceNumber == Convert.ToInt32(row["Answer"]))
+                            {
+                                question.CorrectAnswer = choices.Id;
+                                _context.Entry(question).State = System.Data.Entity.EntityState.Modified;
+                                _context.SaveChanges();
+                            }
+                        }
+                    }
 
                     return View(model);
                 }

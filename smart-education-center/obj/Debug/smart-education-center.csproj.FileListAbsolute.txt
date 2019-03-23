@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\bin\ApplicationInsights.config
 F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\bin\roslyn\csc.exe
 F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -52,3 +53,55 @@ F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\obj\Debug\smar
 F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\obj\Debug\smart-education-center.dll
 F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\obj\Debug\smart-education-center.pdb
 F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\obj\Debug\smart-education-center.csprojResolveAssemblyReference.cache
+=======
+E:\VSProjects\SMART1\smart-education-center\bin\ApplicationInsights.config
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\csc.exe
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\System.Collections.Immutable.dll
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\System.Reflection.Metadata.dll
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\vbc.exe
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\VBCSCompiler.exe
+E:\VSProjects\SMART1\smart-education-center\bin\roslyn\VBCSCompiler.exe.config
+E:\VSProjects\SMART1\smart-education-center\bin\smart-education-center.dll.config
+E:\VSProjects\SMART1\smart-education-center\bin\smart-education-center.dll
+E:\VSProjects\SMART1\smart-education-center\bin\smart-education-center.pdb
+E:\VSProjects\SMART1\smart-education-center\bin\EntityFramework.dll
+E:\VSProjects\SMART1\smart-education-center\bin\EntityFramework.SqlServer.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.Agent.Intercept.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.DependencyCollector.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.Web.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.WindowsServer.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.ApplicationInsights.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.Web.Infrastructure.dll
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Helpers.dll
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Mvc.dll
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Razor.dll
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.Deployment.dll
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.dll
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.Razor.dll
+E:\VSProjects\SMART1\smart-education-center\bin\EntityFramework.xml
+E:\VSProjects\SMART1\smart-education-center\bin\EntityFramework.SqlServer.xml
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.DependencyCollector.xml
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.ServerTelemetryChannel.xml
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.Web.xml
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.AI.WindowsServer.xml
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.ApplicationInsights.xml
+E:\VSProjects\SMART1\smart-education-center\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Razor.xml
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.xml
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.Deployment.xml
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.Razor.xml
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Helpers.xml
+E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Mvc.xml
+E:\VSProjects\SMART1\smart-education-center\obj\Debug\smart-education-center.csproj.ResolveComReference.cache
+E:\VSProjects\SMART1\smart-education-center\obj\Debug\smart-education-center.dll
+E:\VSProjects\SMART1\smart-education-center\obj\Debug\smart-education-center.pdb
+>>>>>>> 699e8312dfee417ebbc2ee0b4074f7c78ef79f45
