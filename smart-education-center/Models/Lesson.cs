@@ -24,6 +24,7 @@ namespace smart_education_center.Models
         public Nullable<int> GradeSubjectId { get; set; }
         public string LessonName { get; set; }
         public string LessonDescription { get; set; }
+        public Nullable<int> LessonNumber { get; set; }
     
         public virtual GradeVsSubject GradeVsSubject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

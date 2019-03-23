@@ -18,6 +18,7 @@ create table GradeVsSubject(
 	Id int primary key identity(1,1),
 	GradeId int,
 	SubjectId int,
+	Description varchar(200),
 
 	CONSTRAINT FK_Grade FOREIGN KEY (GradeId) REFERENCES Grade (Id),
 	CONSTRAINT FK_Subject FOREIGN KEY (SubjectId) REFERENCES Subject (Id)
@@ -27,6 +28,7 @@ create table Lesson(
 	Id int primary key identity(1,1),
 	GradeSubjectId int,
 	LessonName varchar(100),
+	LessonNumber int,
 	LessonDescription varchar(500),
 
 	CONSTRAINT FK_GradeVsSubject FOREIGN KEY (GradeSubjectId) REFERENCES GradeVsSubject(Id)
@@ -65,6 +67,7 @@ create table Choice(
 	Id int primary key identity(1,1),
 	QuestionId int,
 	ChoiceLabel varchar(max),
+	ChoiceNumber int,
 	IsActive int,
 	IsDeleted int
 
@@ -95,3 +98,13 @@ create table TestEntry(
 	CONSTRAINT FK_TestEntryStudent FOREIGN KEY (StudentID) REFERENCES Student(Id),
 	CONSTRAINT FK_TestEntryTest FOREIGN KEY (TestID) REFERENCES Test(Id)
 );
+
+insert into Grade values (1,'Grade One',0),(2,'Grade Two',0),(3,'Grade Three',0),(4,'Grade Four',0),(5,'Grade Five',0),(6,'Grade Six',0),
+(7,'Grade Seven',0),(8,'Grade Eight',0),(9,'Grade Nine',0),(10,'Grade Ten',0),(11,'Grade Eleven',0);
+
+insert into Subject values ('ENGL','English','English',1,0),('SCI','Science','Science',1,0),('MATH','Mathematics','Mathematics',1,0),
+('HSTR','Hostory','History',1,0);
+
+insert into GradeVsSubject values (6,2);
+
+insert into Lesson values (1,'Science Lesson 1','Lesson 1'),(1,'Science Lesson 2','Lesson 2');

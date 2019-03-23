@@ -11,7 +11,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <a href="#">Question Paper</a>
             </li>
             <li class="breadcrumb-item active">Home</li>
         </ol>
@@ -24,19 +24,9 @@
                     @Html.HiddenFor(Model => Model.QuestionTable)
                     @Html.LabelFor(x => x.ExcelPaperFile, "Upload Question Paper with an Excel file :")
                     @Html.TextBoxFor(x => x.ExcelPaperFile, new { type = "file", @class = "required" })
-
-                    @if (Model.QuestionTable != null)
-                    {
-                        <input type="button" value="Finish Upload" class="btn btn-primary" onclick="location.href='@Url.Action("StoreQuestions","Home",Model.QuestionTable)'"/>
-                    }
-                    else
-                    {
-                        <button class="btn btn-sm btn-primary" type="submit">Upload</button>
-                    }
-                    
+                    <button class="btn btn-sm btn-primary" type="submit">Upload</button>
                     @Html.Raw("<div class=\"text-danger\">" + TempData["ErrorMessage"] + "</div>")
                 </div>
-
             }
 
         </div>
@@ -84,7 +74,7 @@
                                                 <li>@row.ItemArray[4]</li>
                                                 <li>@row.ItemArray[5]</li>
                                             </ul>
-                                            
+
                                         </td>
                                         <td>
                                             @row.ItemArray[6]
@@ -108,7 +98,7 @@
     <footer class="sticky-footer">
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
-                <span>Copyright © Your Website 2019</span>
+                <span>Copyright © ByZero Technologies - 2019</span>
             </div>
         </div>
     </footer>
@@ -116,3 +106,4 @@
 
 <script src="~/Areas/Admin/scripts/jquery.dataTables.js"></script>
 <script src="~/Areas/Admin/scripts/dataTables.bootstrap4.js"></script>
+

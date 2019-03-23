@@ -1,0 +1,35 @@
+﻿@model smart_education_center.Models.Subject
+@{
+
+    Layout = null;
+}
+<div class="modal-header site-theme" style="background-color:#343a40">
+    <h4 class="modal-title pull-left" style="color:rgba(255, 255, 255, 0.5)">Add a new subject</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<div class="site-theme">
+    @using (Html.BeginForm("AddSubject", "ManageClass", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <form id="formAS">
+            <div style="padding-right:5px;padding-left:5px;padding-bottom:5px;padding-top:5px; background-color:#ffffff">
+
+                <div class="navbar-form div-row" style="position:center">
+                    @Html.Label("Subject (Eg: English)")
+                    @Html.TextBoxFor(model => model.SubjectName, new { @class = "form-control", @required = "required" })
+                </div>
+                <div class="navbar-form div-row" style="position:center">
+                    @Html.Label("Subject Code (Eg: ENG)")
+                    @Html.TextBoxFor(model => model.SubjectCode, new { @class = "form-control" , @required = "required" })
+                </div>
+                <div class="navbar-form div-row" style="position:center">
+                    @Html.Label("Subject Description")
+                    @Html.TextAreaFor(model => model.SubjectDescription, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="modal-footer site-theme">
+                <button type="submit" class="btn btn-success" required>Add</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </form>
+    }
+</div>

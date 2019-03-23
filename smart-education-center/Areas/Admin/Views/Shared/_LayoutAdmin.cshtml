@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="~/Areas/Admin/Content/css/all.min.css">
     <!-- Custom styles for this template-->
     <link rel="stylesheet" type="text/css" href="~/Areas/Admin/Content/css/sb-admin.css">
+    <link rel="stylesheet" type="text/css" href="~/Areas/Admin/Content/css/toastr.css" />
 
 </head>
 <body id="page-top">
@@ -77,10 +78,16 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index","AdminHome")">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>Question Paper</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index","ManageClass")" id="manageClass">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Class Manage</span>
                 </a>
             </li>
             <li class="nav-item dropdown">
@@ -123,6 +130,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -141,6 +149,7 @@
             </div>
         </div>
     </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/Areas/Admin/scripts/jquery.min.js"></script>
     <script src="~/Areas/Admin/scripts/bootstrap.bundle.min.js"></script>
@@ -148,6 +157,8 @@
     <script src="~/Areas/Admin/scripts/jquery.easing.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="~/Areas/Admin/scripts/sb-admin.min.js"></script>
+
+    <script src="~/Areas/Admin/scripts/toastr.js"></script>
 </body>
 </html>
 
