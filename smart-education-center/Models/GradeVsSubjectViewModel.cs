@@ -10,5 +10,6 @@ namespace smart_education_center.Models
         public int Id { get; set; }
         public Nullable<int> GradeId { get; set; }
         public Nullable<int> SubjectId { get; set; }
+        public string Description { get; set; }
     }
 }

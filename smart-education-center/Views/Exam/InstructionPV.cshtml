@@ -1,7 +1,7 @@
 ﻿@model smart_education_center.Models.TestViewModel
 @{
     Layout = null;
-    int totalHours = (int)(Model.DurationInMinutes/60);
+    int totalHours = (int)(Model.DurationInMinutes / 60);
     var minutes = Model.DurationInMinutes % 60;
 }
 <div class="modal-header site-theme" style="background-color:#d9dbdd">
@@ -10,26 +10,29 @@
 </div>
 <div class="site-theme">
 
-        <form id="formEP">
-            <div style="padding-right:0px;padding-left:0px;padding-bottom:5px;padding-top:5px; background-color:#ffffff;border-radius:12px;">
-               
-                <div class="navbar-form div-row text-center" style="position:center">
-                    <p>This is @(Model.TestName).</p>
-                    <p>You have 
-                        @if (totalHours > 0) {
-                            <h3>@(totalHours) hours and</h3>
-                        }
-                        @if (minutes != 0)
-                        {
-                            <h3>@(minutes) minutes</h3>
-                        }
-                     </p>
-                </div>
+    <form id="formEP">
+        <div style="padding-right:0px;padding-left:0px;padding-bottom:5px;padding-top:5px; background-color:#ffffff;border-radius:12px;">
+
+            <div class="navbar-form div-row text-center" style="position:center">
+                <p>This is @(Model.TestName).</p>
+                <p>
+                    You have
+                    @if (totalHours > 0)
+                    {
+                        <h3>@(totalHours) hours and</h3>
+                    }
+                    @if (minutes != 0)
+                    {
+                        <h3>@(minutes) minutes</h3>
+                    }
+                    and <h3>@(TempData["QuestionCount"]) Questions.</h3>
+                </p>
             </div>
-            <div class="modal-footer site-theme">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="@Url.Action("AddTestEntry", "Exam", new { testID = Model.Id, durationInMinutes =Model.DurationInMinutes })" class="btn btn-default">Continue</a>
-            </div>
-        </form>
+        </div>
+        <div class="modal-footer site-theme">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <a href="@Url.Action("AddTestEntry", "Exam", new { testID = Model.Id, durationInMinutes =Model.DurationInMinutes })" class="btn btn-default">Continue</a>
+        </div>
+    </form>
     @*}*@
 </div>

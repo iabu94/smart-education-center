@@ -157,15 +157,15 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\phone-call.svg" />
     <Content Include="Images\slider_background.jpg" />
-    <Content Include="Models\CyberSchoolEntitieDataModel.Context.tt">
+    <Content Include="Models\CyberSchoolEntitiesDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
-      <LastGenOutput>CyberSchoolEntitieDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
+      <LastGenOutput>CyberSchoolEntitiesDataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\CyberSchoolEntitieDataModel.tt">
+    <Content Include="Models\CyberSchoolEntitiesDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
-      <LastGenOutput>CyberSchoolEntitieDataModel.cs</LastGenOutput>
+      <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
+      <LastGenOutput>CyberSchoolEntitiesDataModel.cs</LastGenOutput>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>
@@ -185,53 +185,53 @@
     </Compile>
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\Choice.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChoiceViewModel.cs" />
-    <Compile Include="Models\CyberSchoolEntitieDataModel.Context.cs">
+    <Compile Include="Models\CyberSchoolEntitiesDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CyberSchoolEntitieDataModel.Context.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CyberSchoolEntitieDataModel.cs">
+    <Compile Include="Models\CyberSchoolEntitiesDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CyberSchoolEntitieDataModel.Designer.cs">
+    <Compile Include="Models\CyberSchoolEntitiesDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Grade.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GradeViewModel.cs" />
     <Compile Include="Models\GradeVsSubject.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GradeVsSubjectViewModel.cs" />
     <Compile Include="Models\Lesson.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LessonViewModel.cs" />
     <Compile Include="Models\Question.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\Student.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\Subject.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Models\Test.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestEntry.cs">
-      <DependentUpon>CyberSchoolEntitieDataModel.tt</DependentUpon>
+      <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestEntryViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
@@ -250,13 +250,6 @@
     <Content Include="Views\Exam\ViewSubject.cshtml" />
     <Content Include="Views\Exam\ViewPaper.cshtml" />
     <Content Include="Views\Exam\ViewQuestion.cshtml" />
-    <EntityDeploy Include="Models\CyberSchoolEntitieDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CyberSchoolEntitieDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\CyberSchoolEntitieDataModel.edmx.diagram">
-      <DependentUpon>CyberSchoolEntitieDataModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.eot" />
     <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.ttf" />
@@ -272,16 +265,20 @@
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Exam\InstructionPV.cshtml" />
     <Content Include="Views\Exam\FinalResult.cshtml" />
-=======
     <Content Include="Areas\Admin\Views\AdminHome\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AddClassPV.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AddSubjectPV.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AssignSubjectPV.cshtml" />
->>>>>>> 699e8312dfee417ebbc2ee0b4074f7c78ef79f45
+    <EntityDeploy Include="Models\CyberSchoolEntitiesDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CyberSchoolEntitiesDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CyberSchoolEntitiesDataModel.edmx.diagram">
+      <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

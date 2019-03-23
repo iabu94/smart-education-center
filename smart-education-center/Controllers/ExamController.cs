@@ -13,6 +13,7 @@ namespace smart_education_center.Controllers
     public class ExamController : Controller
     {
         // GET: Exams
+        // View Grades
         public ActionResult Index()
         {
             using (CyberSchoolEntities context = new CyberSchoolEntities())
@@ -29,6 +30,7 @@ namespace smart_education_center.Controllers
             }
         }
 
+        //view Subjects
         public ActionResult ViewSubject(int gradeID)
         {
             using (CyberSchoolEntities context = new CyberSchoolEntities())
@@ -56,6 +58,7 @@ namespace smart_education_center.Controllers
 
         }
 
+        //view papers
         public ActionResult ViewPaper(int subjectID, int gradeId)
         {
             if (gradeId == 0)
@@ -83,25 +86,30 @@ namespace smart_education_center.Controllers
             }
         }
 
+        //Instruction about the paper
         public ActionResult Instruction(int paperID)
         {
             using (CyberSchoolEntities context = new CyberSchoolEntities())
             {
                 Test objTest = context.Test.Where(o => o.Id == paperID).FirstOrDefault();
                 TestViewModel objTestVM = new TestViewModel();
-                objTestVM.DurationInMinutes = objTest.DurationInMinutes;
-                objTestVM.PaperPart = objTest.PaperPart;
-                objTestVM.TestDescription = objTest.TestDescription;
-                objTestVM.TestName = objTest.TestName;
-                objTestVM.SubjectName = objTest.GradeVsSubject.Subject.SubjectName;
-                objTestVM.Grade = objTest.GradeVsSubject.Grade.Grade1.ToString();
-                objTestVM.Id = objTest.Id;
-
+                if (objTest != null)
+                {
+                    objTestVM.DurationInMinutes = objTest.DurationInMinutes;
+                    objTestVM.PaperPart = objTest.PaperPart;
+                    objTestVM.TestDescription = objTest.TestDescription;
+                    objTestVM.TestName = objTest.TestName;
+                    objTestVM.SubjectName = objTest.GradeVsSubject.Subject.SubjectName;
+                    objTestVM.Grade = objTest.GradeVsSubject.Grade.Grade1.ToString();
+                    objTestVM.Id = objTest.Id;
+                    TempData["QuestionCount"] = context.Question.Where(o => o.TestId == objTest.Id && o.IsActive == 1 && o.IsDeleted == 0).ToList().Count;
+                }
 
                 return PartialView("InstructionPV", objTestVM);
             }
         }
 
+        //Fill data in Test entry table
         public ActionResult AddTestEntry(int testID, int durationInMinutes)
         {
             using (CyberSchoolEntities context = new CyberSchoolEntities())
@@ -139,7 +147,8 @@ namespace smart_education_center.Controllers
                 }
             }
         }
-        //, int? questionNumber, string token
+
+        //View questions
         public ActionResult ViewQuestion(int? questionNumber, string token, string answerModel)
         {
             if (token == null)
@@ -161,7 +170,6 @@ namespace smart_education_center.Controllers
                     TempData["message"] = "The exam duration has expired at" + objTestEntry.TokenExpireTime.ToString() + ".";
                     return RedirectToAction("Index", "Login");
                 }
-                //questionNumber.GetValueOrDefault()
                 if (questionNumber.GetValueOrDefault() < 1)
                 {
                     questionNumber = 1;
@@ -223,6 +231,7 @@ namespace smart_education_center.Controllers
 
         }
 
+        //Update Test Entry table with answers 
         [HttpPost]
         public ActionResult PostAnswer(AnswerViewModel model)
         {
@@ -239,6 +248,10 @@ namespace smart_education_center.Controllers
                     int isCorrect = 0;
                     TestEntry objTestEntry = context.TestEntry.Where(x => x.Token == model.token).FirstOrDefault();
                     List<Answers> objAnswerList;
+                    if(objTestEntry.TotalMarks== null)
+                    {
+                        objTestEntry.TotalMarks = 0;
+                    }
                     if (objTestEntry.RightAnswers != null)
                     {
                         string answers = objTestEntry.RightAnswers;
@@ -334,7 +347,12 @@ namespace smart_education_center.Controllers
             else if(model.Direction == "backward")
             {
                 model.QuestionNumber--;
-            }else
+            }
+            else if (model.SelectQuestionNumber!=0)
+            {
+                model.QuestionNumber = model.SelectQuestionNumber;
+            }
+            else
             {
                 return RedirectToAction("FinalResult", "Exam",new { token=model.token });
             }
@@ -342,6 +360,7 @@ namespace smart_education_center.Controllers
             return RedirectToAction("ViewQuestion", "Exam", new { questionNumber = model.QuestionNumber, token = model.token, answerModel = JsonConvert.SerializeObject(model.AnswerList.ToList()) });
         }
 
+        //Get final result
         public ActionResult FinalResult(string token)
         {
             using(CyberSchoolEntities context=new CyberSchoolEntities())

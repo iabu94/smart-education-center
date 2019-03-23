@@ -18,5 +18,6 @@ namespace smart_education_center.Models
         public int CorrectAnswer { get; set; }
         //public DataTable AnswerTable { get; set; }
         public List<Answers> AnswerList { get; set; }
+        public int SelectQuestionNumber { get; set; }
     }
 }
