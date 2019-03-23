@@ -87,11 +87,27 @@
                         @Html.PasswordFor(model => model.passHash, new { @placeholder = "Enter Password", @class = "form-control", @required = "required" })
                         @Html.ValidationMessageFor(model => model.passHash, "", new { @class = "error" })
                     </div><br />
-                    @if (TempData["errorMessage"] != null)
+                    @if (TempData["message"] != null)
                     {
                         <div class="row">
                             <center>
-                                <p style="color:red;background-color:#ffd0ce;">@TempData["errorMessage"]</p>
+                                <p style="color:red;background-color:#ffd0ce;">@TempData["message"]</p>
+                            </center>
+                        </div>
+                    }
+                    @if (TempData["nullStudentID"] != null && TempData["errorMessage"] == null)
+                    {
+                        <div class="row">
+                            <center>
+                                <p style="color:red;background-color:#ffd0ce;">@TempData["nullStudentID"]</p>
+                            </center>
+                        </div>
+                    }
+                    @if (TempData["dbError"] != null && TempData["errorMessage"] == null)
+                    {
+                        <div class="row">
+                            <center>
+                                <p style="color:red;background-color:#ffd0ce;">@TempData["dbError"]</p>
                             </center>
                         </div>
                     }

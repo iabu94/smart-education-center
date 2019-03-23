@@ -18,5 +18,6 @@ namespace smart_education_center.Models
         public Nullable<int> IsDeleted { get; set; }
 
         public string SubjectName { get; set; }
+        public string Grade { get; set; }
     }
 }
