@@ -31,14 +31,49 @@
 
         </div>
 
-        @if (TempData["ResultMessage"] !=null && TempData["ResultMessage"].ToString()=="Added Successfully")
+        @if (TempData["ResultMessage"] != null && TempData["ResultMessage"].ToString() == "Added Successfully")
         {
             <div class="container">
-                <label class="form-control">@Model.Grade</label>
-                <label class="form-control">@Model.Subject</label>
-                <label class="form-control">@Model.PaperName</label>
-                <label class="form-control">@Model.PaperPart</label>
-                <label class="form-control">@Model.PaperTime</label>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.LabelFor(x => x.Grade) 
+                    </div>
+                    <div class="col-sm-4">
+                       : @Html.Label(Model.Grade.ToString())
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.LabelFor(x => x.Subject)
+                    </div>
+                    <div class="col-sm-4">
+                      :  @Html.Label(Model.Subject.ToString())
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.LabelFor(x => x.PaperName)
+                    </div>
+                    <div class="col-sm-4">
+                       : @Html.Label(Model.PaperName.ToString())
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.LabelFor(x => x.PaperPart)
+                    </div>
+                    <div class="col-sm-4">
+                       : @Html.Label(Model.PaperPart.ToString())
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        @Html.LabelFor(x => x.PaperTime)
+                    </div>
+                    <div class="col-sm-4">
+                      : @Html.Label(Model.PaperTime.ToString())
+                    </div>
+                </div>
             </div>
         }
 

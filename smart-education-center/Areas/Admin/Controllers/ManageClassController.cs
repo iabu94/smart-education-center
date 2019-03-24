@@ -129,24 +129,62 @@ namespace smart_education_center.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult AssignSubject(GradeVsSubject model)
         {
             try
             {
                 GradeVsSubject classSubject = model;
-                classSubject.Description = model.Grade.Grade1 + "'s" + model.Subject.SubjectName + "subject.";
-                return RedirectToAction("Index");
+                classSubject.Grade = _context.Grade.FirstOrDefault(x => x.Id == model.GradeId);
+                classSubject.Subject = _context.Subject.FirstOrDefault(x => x.Id == model.SubjectId);
+                classSubject.Description = model.Grade.Grade1 + "'s " + model.Subject.SubjectName + " subject.";
+                if (ValidateClassSubject(model))
+                {
+                    _context.GradeVsSubject.Add(classSubject);
+                    _context.SaveChanges();
+
+                    TempData["ResultCode"] = (int)ResultCode.SUCCESS;
+                    TempData["ResultMessage"] = "Added Successfully";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["ResultCode"] = (int)ResultCode.FAILED;
+                    TempData["ResultMessage"] = "Already Exists";
+                    return RedirectToAction("Index");
+                }
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                TempData["ResultCode"] = (int)ResultCode.FAILED;
+                TempData["ResultMessage"] = e.ToString();
                 return RedirectToAction("Index");
             }
-            
+
+        }
+
+        private bool ValidateClassSubject(GradeVsSubject model)
+        {
+            List<GradeVsSubject> classSubjects = _context.GradeVsSubject.Where(x => x.GradeId == model.GradeId).ToList();
+            foreach (var item in classSubjects)
+            {
+                if (item.Subject == model.Subject)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return true;
+
         }
 
         public JsonResult GetSubjectList(int grade)
         {
-            var dbSubjectList = _context.Subject.Where(x => x.IsActive ==(int)IsActive.YES&&x.IsDeleted==(int)IsDeleted.NO).ToList();
+            var dbSubjectList = _context.Subject.Where(x => x.IsActive == (int)IsActive.YES && x.IsDeleted == (int)IsDeleted.NO).ToList();
             var dbClassSubjectList = _context.GradeVsSubject.Where(m => m.GradeId == grade).Select(m => m.Subject).ToList();
 
             foreach (var item in dbClassSubjectList)
