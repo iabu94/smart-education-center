@@ -188,17 +188,13 @@ namespace smart_education_center.Areas.Admin.Controllers
         {
             using (_context)
             {
-                if (_context.Grade.Any(x => x.Grade1 != model.Grade))
+                if (_context.Grade.Any(x => x.Grade1 == model.Grade) && _context.Subject.Any(x => x.SubjectName == model.Subject))
                 {
-                    return "grade";
-                }
-                if (_context.Subject.Any(x => x.SubjectName != model.Subject))
-                {
-                    return "subject";
+                    return "success";
                 }
                 else
                 {
-                    return "success";
+                    return "failed";
                 }
             }
         }
