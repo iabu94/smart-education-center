@@ -115,18 +115,49 @@ namespace smart_education_center.Areas.Admin.Controllers
         {
             try
             {
-                using (_context)
-                {
-                    ViewBag.Grades = new SelectList(_context.Grade, "Id", "Grade1");
-                    return PartialView("AssignSubjectPV");
-                }
+                IQueryable<Grade> dbGradeList = null;
+                dbGradeList = _context.Grade.Where(x => x.IsDeleted == (int)IsDeleted.NO);
+                ViewBag.Grades = new SelectList(dbGradeList, "Id", "Grade1");
+                ViewBag.Subjects = new SelectList(_context.Subject.AsQueryable(), "Id", "SubjectName");
+                return PartialView("AssignSubjectPV");
             }
             catch (Exception e)
             {
                 TempData["ResultCode"] = (int)ResultCode.FAILED;
-                TempData["ResultCode"] = e.ToString();
+                TempData["ResultMessage"] = e.ToString();
                 return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult AssignSubject(GradeVsSubject model)
+        {
+            try
+            {
+                GradeVsSubject classSubject = model;
+                classSubject.Description = model.Grade.Grade1 + "'s" + model.Subject.SubjectName + "subject.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
+            
+        }
+
+        public JsonResult GetSubjectList(int grade)
+        {
+            var dbSubjectList = _context.Subject.Where(x => x.IsActive ==(int)IsActive.YES&&x.IsDeleted==(int)IsDeleted.NO).ToList();
+            var dbClassSubjectList = _context.GradeVsSubject.Where(m => m.GradeId == grade).Select(m => m.Subject).ToList();
+
+            foreach (var item in dbClassSubjectList)
+            {
+                dbSubjectList.Remove(item);
+            }
+
+            IQueryable<Subject> resultSubjectList = dbSubjectList.AsQueryable();
+            var resultData = new SelectList(resultSubjectList, "Id", "SubjectName");
+            ViewBag.Subjects = resultData;
+            return Json(resultData, JsonRequestBehavior.AllowGet);
         }
     }
 }

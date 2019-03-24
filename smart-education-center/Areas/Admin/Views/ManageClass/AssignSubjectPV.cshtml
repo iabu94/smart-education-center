@@ -15,9 +15,17 @@
 
                 <div class="navbar-form div-row" style="position:center">
                     @Html.Label("Select the Grade")
-                    @Html.DropDownListFor(model=>model.Grade.Id,(SelectList)ViewBag.Grades,"--Select a class--", new { @class = "form-control", @required = "required" })
+                    @Html.DropDownListFor(model => model.Grade.Id, ViewBag.Grades as SelectList, "--select--", new { @class = "form-control", @required = "required" })
                 </div>
+                @*<div class="navbar-form div-row" style="position:center">
+                    @Html.Label("Select the Subject to assign")
+                    <select id="subject_list" class="form-control"></select>
+                </div>*@
                 
+                <div class="navbar-form div-row" style="position:center">
+                    @Html.Label("Select the Subject")
+                        @Html.DropDownListFor(model => model.Grade.Id, ViewBag.Subjects as SelectList, "--select--", new { @class = "form-control", @required = "required" })
+                </div>
             </div>
             <div class="modal-footer site-theme">
                 <button type="submit" class="btn btn-success" required>Add</button>
@@ -27,4 +35,26 @@
     }
 </div>
 
+<script>
+    $(function () {
+        $('#Grade_Id').change(function () {
+            var option = $(this).find("option:selected").text();
+            var url = '@Url.Action("GetSubjectList", "ManageClass")'
 
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: "json",
+                data: { grade: parseInt(option) },
+                success: function (res) {
+                    $.each(res.d, function () {
+                        $("#subject_list").append($("<option></option>").val(this.Id).html(this.SubjectName));  
+                    }
+                )},
+                error: function () {
+                    alert("error");
+                }
+            });
+        })
+    })
+</script>

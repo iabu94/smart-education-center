@@ -18,6 +18,7 @@ namespace smart_education_center.Areas.Admin.Controllers
     public class AdminHomeController : Controller
     {
         private CyberSchoolEntities _context = new CyberSchoolEntities();
+
         _Application excel = new _Excel.Application();
         Workbook wb;
         Worksheet ws;
@@ -75,12 +76,28 @@ namespace smart_education_center.Areas.Admin.Controllers
                     dt.Columns.Add("Choice 4", typeof(string));
                     dt.Columns.Add("Answer", typeof(int));
                     dt.Columns.Add("Lesson", typeof(int));
+                    dt.Columns.Add("Points", typeof(int));
 
-                    for (int i = 10; i < 30; i = i + 4)
+                    for (int i = 10; i < 170; i = i + 4)
                     {
-                        dt.Rows.Add(ws.Cells[i, 1].value2, ws.Cells[i, 2].value2, ws.Cells[i, 12].value2,
-                            ws.Cells[i, 13].value2, ws.Cells[i, 14].value2, ws.Cells[i, 15].value2, ws.Cells[i, 16].value2,
-                            ws.Cells[i, 17].value2);
+                        if (ws.Cells[i,2].value2 == null)
+                        {
+                            break;
+                        }
+                        int lesson;
+                        if (ws.Cells[i, 17].value2 == null)
+                        {
+                            lesson = 0;
+                        }
+                        else
+                        {
+                            lesson = Convert.ToInt32(ws.Cells[i, 17].value2);
+                        }
+
+                        dt.Rows.Add(ws.Cells[i, 1].value2, ws.Cells[i, 2].value2,
+                            ws.Cells[i, 12].value2, ws.Cells[i, 13].value2,
+                            ws.Cells[i, 14].value2, ws.Cells[i, 15].value2,
+                            ws.Cells[i, 16].value2, lesson, ws.Cells[i, 18].value2);
                     }
 
                     model.QuestionTable = dt;
@@ -105,6 +122,8 @@ namespace smart_education_center.Areas.Admin.Controllers
                         question.TestId = testModel.Id;
                         question.QuestionNumber = Convert.ToInt32(row["Question Number"]);
                         question.Question1 = row["Question"].ToString();
+                        question.PointsOfQuestion = Convert.ToDouble(row["Points"]);
+
                         question.IsActive = (int)IsActive.YES;
                         question.IsDeleted = (int)IsDeleted.NO;
 

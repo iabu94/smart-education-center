@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 /******************************
@@ -393,7 +393,7 @@ section
 {
 	width: 279px;
 	height: 100%;
-	background: #ffb606;
+	background: #343a40 ;
 }
 .header_side img
 {
@@ -693,7 +693,7 @@ section
 }
 .hero_slide_content h1 span
 {
-	background: #ffb606;
+	background: #343a40;
 	padding-left: 13px;
 	padding-right: 13px;
 	margin-left: -12px;
@@ -741,11 +741,11 @@ section
 }
 .hero_slider_nav:hover
 {
-	background: #ffb606;
+	background: #343a40 !important;
 }
 .hero_slider_nav:hover span
 {
-	color: #FFFFFF;
+	color: white;
 }
 .hero_slider_nav span
 {
@@ -753,16 +753,18 @@ section
 	text-transform: uppercase;
 	font-size: 12px;
 	font-weight: 700;
-	color: #121212;
+	color: white;
 	line-height: 1;
 }
 .hero_slider_left
 {
 	left: 4.32%;
+    background: #343a40 !important;
 }
 .hero_slider_right
 {
 	right: 4.32%;
+    background:#343a40 !important;
 }
 
 /*********************************

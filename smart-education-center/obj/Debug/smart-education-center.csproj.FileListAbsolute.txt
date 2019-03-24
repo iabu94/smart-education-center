@@ -1,3 +1,4 @@
+E:\VSProjects\SMART1\smart-education-center\obj\Debug\smart-education-center.csproj.ResolveComReference.cache
 E:\VSProjects\SMART1\smart-education-center\bin\ApplicationInsights.config
 E:\VSProjects\SMART1\smart-education-center\bin\roslyn\csc.exe
 E:\VSProjects\SMART1\smart-education-center\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -45,6 +46,5 @@ E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.Deployment.x
 E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Webpages.Razor.xml
 E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Helpers.xml
 E:\VSProjects\SMART1\smart-education-center\bin\System.Web.Mvc.xml
-E:\VSProjects\SMART1\smart-education-center\obj\Debug\smart-education-center.csproj.ResolveComReference.cache
 E:\VSProjects\SMART1\smart-education-center\obj\Debug\smart-education-center.dll
 E:\VSProjects\SMART1\smart-education-center\obj\Debug\smart-education-center.pdb
