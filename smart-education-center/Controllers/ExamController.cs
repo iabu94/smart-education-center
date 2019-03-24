@@ -276,6 +276,7 @@ namespace smart_education_center.Controllers
                                     }
                                 }
                                 updateChoiceID.ChoiceID = model.choiceID;
+                                //updateChoiceID.QuestionNumber = model.QuestionNumber;
 
                                 objTestEntry.RightAnswers = JsonConvert.SerializeObject(objAnswerList.ToList());
                                 context.Entry(objTestEntry).State = EntityState.Modified;
@@ -292,7 +293,7 @@ namespace smart_education_center.Controllers
                             {
                                 isCorrect = 0;
                             }
-                            objAnswerList.Add(new Answers { QuestionID = model.QuestionID, ChoiceID = model.choiceID, IsCorrect = isCorrect });
+                            objAnswerList.Add(new Answers { QuestionID = model.QuestionID, ChoiceID = model.choiceID, IsCorrect = isCorrect, QuestionNumber=model.QuestionNumber });
 
                             if (isCorrect == 1)
                             {
@@ -314,7 +315,7 @@ namespace smart_education_center.Controllers
                         {
                             isCorrect = 0;
                         }
-                        objAnswerList.Add(new Answers { QuestionID = model.QuestionID, ChoiceID = model.choiceID, IsCorrect = isCorrect });
+                        objAnswerList.Add(new Answers { QuestionID = model.QuestionID, ChoiceID = model.choiceID, IsCorrect = isCorrect, QuestionNumber=model.QuestionNumber });
 
                         if (isCorrect == 1)
                         {

@@ -34,5 +34,6 @@ namespace smart_education_center.Models
         public int QuestionID { get; set; }
         public int ChoiceID { get; set; }
         public int IsCorrect { get; set; }
+        public int QuestionNumber { get; set; }
     }
 }
