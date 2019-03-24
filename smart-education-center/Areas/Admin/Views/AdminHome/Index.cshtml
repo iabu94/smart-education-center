@@ -31,6 +31,18 @@
 
         </div>
 
+        @if (TempData["ResultMessage"].ToString() == "Added Successfully")
+        {
+            <div class="container">
+                <label class="form-control">@Model.Grade</label>
+                <label class="form-control">@Model.Subject</label>
+                <label class="form-control">@Model.PaperName</label>
+                <label class="form-control">@Model.PaperPart</label>
+                <label class="form-control">@Model.PaperTime</label>
+            </div>
+        }
+
+
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
@@ -107,3 +119,23 @@
 <script src="~/Areas/Admin/scripts/jquery.dataTables.js"></script>
 <script src="~/Areas/Admin/scripts/dataTables.bootstrap4.js"></script>
 
+<script src="~/Areas/Admin/scripts/jquery.min.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        var resultCode = @Html.Raw(Json.Encode(TempData["ResultCode"]));
+        var resultMessage = @Html.Raw(Json.Encode(TempData["ResultMessage"]));
+
+        if (resultCode == 1) {
+            toastr.success(resultMessage.toString());
+        }
+
+        if (resultCode == 2) {
+            toastr.error(resultMessage.toString());
+        }
+    });
+
+</script>
