@@ -31,7 +31,7 @@
 
         </div>
 
-        @if (TempData["ResultMessage"].ToString() == "Added Successfully")
+        @if (TempData["ResultMessage"] !=null && TempData["ResultMessage"].ToString()=="Added Successfully")
         {
             <div class="container">
                 <label class="form-control">@Model.Grade</label>
