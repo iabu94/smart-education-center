@@ -2,9 +2,9 @@
 @{
     Layout = null;
     ViewBag.Title = "ViewQuestion";
-    int second = (int)Model.DurationInMinutes * 60;
-    var endTime = DateTime.UtcNow.AddSeconds(second);
-    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+
+    var endTime = ((DateTime)Model.TokenExpireTime);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.Now.Ticks).TotalSeconds.ToString("#");
 }
 
 <!DOCTYPE html>
@@ -37,10 +37,10 @@
         <div class="container text-center">
             <div class="row">
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px; height:80px;">
-                    <h3 style="font-size:2vw;">Grade @Session["Grade"]</h3>
+                    <h3 style="font-size:2vw;">Grade @Model.Grade</h3>
                 </div>
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px;">
-                    <h3 style="font-size:2vw;">@Session["SubjectName"]</h3>
+                    <h3 style="font-size:2vw;">@Model.SubjectName</h3>
                 </div>
                 <div class="col-xs-4 col-sm-4" style="border:groove; border-radius:12px;">
                     <h3 style="font-size:2vw;">@Model.TestName</h3>
@@ -58,76 +58,181 @@
 
                 </div>
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px; height:80px;">
-                    <h3 style="font-size:2vw;"><span id="minRemaining"></span> : <span id="secRemaining"></span></h3>
+                    <h3 style="font-size:2vw;">
+                        <span id="horRemaining"></span> : <span id="minRemaining"></span> : <span id="secRemaining"></span>
+                    </h3>
                 </div>
             </div>
         </div>
     </div>
 
-@using (Html.BeginForm("PostAnswer", "Exam", FormMethod.Post, new { enctype = "multipart/form-data", @id="form" }))
-{
-    <div class="container-fluid bg-3">
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-xs-1 col-sm-1 text-center">
-                <h1 style="border:1px solid black; border-radius:12px; font-size:2vw;">@Model.QuestionNumber</h1>
-            </div>
-            <div class="col-xs-11 col-sm-9" style="border-left:2px solid black;">
-                <div>
-                    @Model.Question1
-                    <br /><br />
+    @using (Html.BeginForm("PostAnswer", "Exam", FormMethod.Post, new { enctype = "multipart/form-data", @id = "form" }))
+    {
+        <input type="hidden" name="Direction" id="direction" />
+        <input type="hidden" name="TestID" value="@(Model.TestId)" />
+        <input type="hidden" name="QuestionID" value="@(Model.Id)" />
+        <input type="hidden" name="QuestionNumber" value="@(Model.QuestionNumber)" />
+        <input type="hidden" name="CorrectAnswer" value="@(Model.CorrectAnswer)" />
+        <input type="hidden" name="AnswerList" value="@(Model.AnswerList)" />
+        <input type="hidden" name="SelectQuestionNumber" id="SelectQuestionNumberId" />
+        <div class="container-fluid bg-3">
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-xs-1 col-sm-1 text-center">
+                    <h1 style="border:1px solid black; border-radius:12px; font-size:2vw;">@(Model.QuestionNumber)</h1>
                 </div>
-                @*<div class="text-center">
-                        Image
+                <div class="col-xs-11 col-sm-9" style="border-left:2px solid black;">
+                    <div>
+                        @(Model.Question1)
                         <br /><br />
-                    </div>*@
-                <div style="border-top:2px solid black;">
-                    <br />
+                    </div>
+                    @*<div class="text-center">
+                            Image
+                            <br /><br />
+                        </div>*@
+                    <div style="border-top:2px solid black;">
+                        <br />
                         @foreach (var item in Model.CoiceVMList)
                         {
                             <div class="col-sm-6">
-                                <input type="radio" name="answer" /> @item.ChoiceLabel
+                                <input type="hidden" name="token" value="@(TempData["token"])" />
+                                <input type="hidden" name="mark" value="@Model.PointsOfQuestion" />
+                                @if (Model.ChoiceID == item.Id)
+                                {
+                                    <input type="radio" name="choiceID" value="@(item.Id)" checked /> @(item.ChoiceLabel)
+                                }
+                                else
+                                {
+                                    <input type="radio" name="choiceID" value="@(item.Id)" /> @(item.ChoiceLabel)
+                                }
                                 <br /><br />
                             </div>
                         }
-                    @*<div class="col-sm-6">
-                            <input type="radio" name="answer"/> organized from thousands of 1
-                            <br /><br />
+                    </div>
+                    <div>
+                        <div class="col-xs-1 col-sm-1" style="border-top:1px solid black;">
+                            <br />
+                            @if (Model.QuestionNumber == 1)
+                            {
+                                <a href="#" class="btn btn-default disabled" style="color:black;border:1px solid black;border-radius:12px;"><</a>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" onclick="saveBackward(this);" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;"><</a>
+                            }
+
                         </div>
-                        <div class="col-sm-6">
-                            <input type="radio" name="answer"/> organized from thousands of publishers2
-                            <br /><br />
+                        <div class="col-xs-8 col-sm-10" style="border-top:1px solid black;">
+                            <br />
+                            <center>
+                                <a href="javascript:void(0);" onclick="QuestionsNumbers();" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;">Summary</a>
+                            </center>
                         </div>
-                        <div class="col-sm-6">
-                            <input type="radio" name="answer"/> organized from thousands of publishers3
-                            <br /><br />
-                        </div>*@
+                        <div class="col-xs-2 col-sm-1" style="border-top:1px solid black;">
+                            <br />
+                            @if (Model.QuestionCount == Model.QuestionNumber)
+                            {
+                                @*<input type="submit" value="Submit" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;" />*@
+                                <a href="javascript:void(0);" onclick="Confirm();" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;">Submit</a>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0);" onclick="saveForward(this);" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;">></a>
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <div class="col-xs-1 col-sm-1" style="border-top:1px solid black;">
-                        <br />
-                        <a href="javascript:void(0);" onclick="saveBackward(this);" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;"><</a>
-                    </div>
-                    <div class="col-xs-8 col-sm-10" style="border-top:1px solid black;">
-                        <br />
-                        @for (int i = 0; i < Model.QuestionCount; i++)
-                        {
-                            <div class="col-xs-2 col-sm-1">
-                                <a href="@Url.Action("ViewQuestion", "Exam", new { paperID = Model.TestId, questionNumber = i + 1 })" class="btn btn-default" style="color:black;border:1px solid black;" onmouseenter="style.borderColor = 'Blue';" id="btnID@(i + 1)">@(i + 1)</a>
+            </div>
+            <br />
+
+        </div><br /><br /><br />
+
+        //Cofirm popup
+        <div class="modal fade" id="popupModal">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color:#d9dbdd;border-radius:12px;">
+                    <div class="modal-body site-theme-model" id="popupModalBodyDiv">
+                        <div class="modal-header site-theme" style="background-color:#d9dbdd">
+                            <h4 class="modal-title pull-left">Confirm</h4>
+                            <button type="button" class="close" data-dismiss="modal" style="color:red;">&times;</button>
+                        </div>
+                        <div class="site-theme">
+                            <div style="padding-right:0px;padding-left:0px;padding-bottom:5px;padding-top:5px; background-color:#ffffff;border-radius:12px;">
+
+                                <div class="navbar-form div-row text-center" style="position:center">
+                                    <p>Do you want to Submit the Exam?</p>
+                                </div>
                             </div>
-                        }
-                    </div>
-                    <div class="col-xs-2 col-sm-1" style="border-top:1px solid black;"> 
-                        <br />
-                        <a href="javascript:void(0);" onclick="saveForward(this);" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;">></a>
+                            <div class="modal-footer site-theme">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <input type="submit" value="Submit" class="btn btn-default" />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <br />
 
-    </div><br /><br /><br />
-}
+        //Question numbers Popup Model
+        <div class="modal fade" id="questionsPopupModal">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color:#d9dbdd;border-radius:12px;">
+                    <div class="modal-body site-theme-model" id="popupModalBodyDiv">
+                        <div class="modal-header site-theme" style="background-color:#d9dbdd">
+                            <h4 class="modal-title pull-left">Summary</h4>
+                            <button type="button" class="close" data-dismiss="modal" style="color:red;">&times;</button>
+                        </div>
+                        <div class="site-theme">
+                            <div style="padding-right:0px;padding-left:0px;padding-bottom:5px;padding-top:5px; background-color:#ffffff;border-radius:12px;">
+
+                                <div class="navbar-form div-row text-center" style="position:center">
+                                    @for (int i = 0; i < Model.QuestionCount; i++)
+                                    {
+                                        @*<div style="padding-top:2px;">*@
+                                            @*<a href="@Url.Action("ViewQuestion", "Exam", new { questionNumber = i + 1, token = TempData["token"]})" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>*@
+                                            if (Model.AnswerList != null)
+                                            {
+                                                if (Model.AnswerList.Any(x => x.QuestionID == (i + 1)))
+                                                {
+                                                    if (Model.AnswerList.Where(x => x.QuestionID == (i + 1)).Select(o => o.ChoiceID).FirstOrDefault() < 1)
+                                                    {
+                                                        <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                                            }
+                                            if ((i+1) % 10 == 0)
+                                            {
+                                                <br /><br />
+                                            }
+                                        @*</div>*@
+                                    }
+                                </div>
+                            </div>
+                            <div class="modal-footer site-theme">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <input type="submit" value="Submit" class="btn btn-default" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
     <footer class="container-fluid text-center navbar-fixed-bottom" style="height:50px;">
         <p>Smart Education Center</p>
     </footer>
@@ -136,33 +241,80 @@
 
 <script>
 
+    var remSeconds = @timeRemaining;
+    var secCounter = remSeconds%60;
+    var minCounter = (remSeconds/60)%60;
+
+    function formatNumber(number){
+        if(number<10) return '0'+number;
+        else return ''+number;
+    }
+
     function startTick() {
 
-        var remSeconds = @timeRemaining;
-        var secCounter = remSeconds%60;
-
-        function formatNumber(number){
-            if (number<10) {
-                return '0'+number;
-            }
-            else {
-                return ''+number;
-            }
+        document.getElementById('secRemaining').innerText = formatNumber(secCounter);
+        document.getElementById('minRemaining').innerText = formatNumber(parseInt(minCounter));
+        if(@timeRemaining>3600){
+            document.getElementById('horRemaining').innerText = parseInt(remSeconds/3600);
+        }
+        if(remSeconds<600){
+            document.getElementById('minRemaining').style.color="red";
+            document.getElementById('secRemaining').style.color="red";
         }
 
-        document.getElementById('secRemaining').innerText = formatNumber(secCounter);
-        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
-
         var _tick = setInterval(function(){
-            remSeconds = remSeconds-1;
-            secCounter = secCounter-1;
-            document.getElementById('secRemaining').innerText = formatNumber(secCounter);
-            document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
-            if (secCounter==0) {
-                secCounter=60;
+            if(remSeconds>0){
+
+                if(minCounter == 0){
+                    minCounter=60;
+                }
+                if (secCounter==0) {
+                    secCounter=60;
+                    minCounter = minCounter-1;
+                    document.getElementById('minRemaining').innerText = formatNumber(parseInt(minCounter));
+                }
+                remSeconds = remSeconds-1;
+                secCounter = secCounter-1;
+
+                document.getElementById('secRemaining').innerText = formatNumber(secCounter);
+                if(@timeRemaining>3600){
+                    document.getElementById('horRemaining').innerText = parseInt(remSeconds/3600);
+                }
+                if(remSeconds<600){
+                    document.getElementById('minRemaining').style.color="red";
+                    document.getElementById('secRemaining').style.color="red";
+                }
             }
+            else{
+                alert("Your Exam time has expired");
+                clearInterval(_tick);
+                window.location.href = '@Url.Action("FinalResult", "Exam", new { token = TempData["token"] })';
+            }
+
         },1000);
     }
     startTick();
 
+    function saveForward(sender){
+        $('#direction').val('forward');
+        document.getElementById('form').submit();
+    }
+    function saveBackward(sender){
+        $('#direction').val('backward');
+        document.getElementById('form').submit();
+    }
+    function saveGo(sender){
+        $('#SelectQuestionNumberId').val(sender);
+        document.getElementById('form').submit();
+    }
+
+    var Confirm = function () {
+
+        $("#popupModal").modal('show');
+    }
+
+    var QuestionsNumbers = function () {
+
+        $("#questionsPopupModal").modal('show');
+    }
 </script>

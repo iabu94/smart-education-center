@@ -108,3 +108,9 @@ insert into Subject values ('ENGL','English','English',1,0),('SCI','Science','Sc
 insert into GradeVsSubject values (6,2);
 
 insert into Lesson values (1,'Science Lesson 1','Lesson 1'),(1,'Science Lesson 2','Lesson 2');
+
+ALTER TABLE Lesson
+ADD LessonNumber int;
+
+ALTER TABLE GradeVsSubject
+ADD Description varchar(200);

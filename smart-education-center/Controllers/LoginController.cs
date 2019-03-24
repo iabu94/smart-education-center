@@ -26,12 +26,13 @@ namespace smart_education_center.Controllers
                     {
                         Student objStudent = context.Student.Where(o => o.username == model.username && o.passHash == model.passHash).FirstOrDefault();
                         Session["studentName"] = objStudent.FirstName;
-
+                        Session["studentID"] = objStudent.Id;
+                        
                         return RedirectToAction("Index", "Exam");
                     }
                     else
                     {
-                        TempData["errorMessage"] = "Incorrect Username or Password!";
+                        TempData["message"] = "Incorrect Username or Password!";
                         return View(model);
                     }
 

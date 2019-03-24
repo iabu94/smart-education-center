@@ -11,5 +11,6 @@ namespace smart_education_center.Models
         public Nullable<int> GradeSubjectId { get; set; }
         public string LessonName { get; set; }
         public string LessonDescription { get; set; }
+        public Nullable<int> LessonNumber { get; set; }
     }
 }

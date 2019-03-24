@@ -1,4 +1,8 @@
+<<<<<<< HEAD:smart-education-center/Models/CyberSchoolEntitiesDataModel.Designer.cs
 ﻿// T4 code generation is enabled for model 'E:\VSProjects\SMART1\smart-education-center\Models\CyberSchoolEntitiesDataModel.edmx'. 
+=======
+﻿// T4 code generation is enabled for model 'F:\Spesial Project\Jeewana San\CyberSchool\smart-education-center\Models\CyberSchoolEntitiesDataModel.edmx'. 
+>>>>>>> 8f7f6773a5f33f9b37d55b7c7aaf020b923057d4:smart-education-center/Models/CyberSchoolEntitiesDataModel.Designer.cs
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

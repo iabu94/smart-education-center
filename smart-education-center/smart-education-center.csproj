@@ -84,6 +84,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -153,7 +157,10 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\phone-call.svg" />
     <Content Include="Images\slider_background.jpg" />
+<<<<<<< HEAD
     <Content Include="Images\slider_background_b&amp;w.jpg" />
+=======
+>>>>>>> 8f7f6773a5f33f9b37d55b7c7aaf020b923057d4
     <Content Include="Models\CyberSchoolEntitiesDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
@@ -181,6 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\Choice.cs">
       <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
@@ -262,13 +270,18 @@
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Exam\InstructionPV.cshtml" />
+    <Content Include="Views\Exam\FinalResult.cshtml" />
     <Content Include="Areas\Admin\Views\AdminHome\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AddClassPV.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AddSubjectPV.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AssignSubjectPV.cshtml" />
+<<<<<<< HEAD
     <Content Include="Areas\Admin\Views\ManagePeople\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManagePeople\AddStudentPV.cshtml" />
+=======
+>>>>>>> 8f7f6773a5f33f9b37d55b7c7aaf020b923057d4
     <EntityDeploy Include="Models\CyberSchoolEntitiesDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CyberSchoolEntitiesDataModel.Designer.cs</LastGenOutput>
