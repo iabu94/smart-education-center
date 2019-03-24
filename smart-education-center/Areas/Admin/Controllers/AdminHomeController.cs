@@ -10,6 +10,7 @@ using System.IO;
 using System.Data;
 using smart_education_center.Models;
 using static smart_education_center.Common.Enum;
+using System.Runtime.InteropServices;
 
 namespace smart_education_center.Areas.Admin.Controllers
 {
@@ -60,17 +61,14 @@ namespace smart_education_center.Areas.Admin.Controllers
                         wb = excel.Workbooks.Open(fileName);
                         ws = wb.Worksheets[1];
 
-                        model.Grade = Convert.ToInt32(ws.Cells[1, 6].value2);
-                        model.Subject = ws.Cells[2, 6].value2;
-                        model.PaperName = ws.Cells[3, 6].value2;
+                        model.Grade = ws.Cells[1, 6].value2 == null ? 0 : Convert.ToInt32(ws.Cells[1, 6].value2);
+                        model.Subject = ws.Cells[2, 6].value2 == null ? "" : ws.Cells[2, 6].value2;
+                        model.PaperName = ws.Cells[3, 6].value2 == null ? "" : ws.Cells[3, 6].value2;
                         model.PaperPart = Convert.ToInt32(ws.Cells[4, 6].value2);
                         model.PaperTime = Convert.ToInt32(ws.Cells[5, 6].value2);
 
-                        if (ValidateTheFields(model) != "success")
+                        if (!ValidateTheFields(model))
                         {
-                            TempData["ResultCode"] = (int)ResultCode.FAILED;
-                            TempData["ResultMessage"] = "Please add the " + ValidateTheFields(model) + " to the database before uploading the paper."
-                                + " And assign it to the relavant class/subject.";
                             return View(model);
                         }
 
@@ -93,12 +91,8 @@ namespace smart_education_center.Areas.Admin.Controllers
                             {
                                 break;
                             }
-                            int lesson;
-                            if (ws.Cells[i, 17].value2 == null)
-                            {
-                                lesson = 0;
-                            }
-                            else
+                            int lesson = 0;
+                            if (ws.Cells[i, 17].value2 != null)
                             {
                                 lesson = Convert.ToInt32(ws.Cells[i, 17].value2);
                             }
@@ -110,6 +104,12 @@ namespace smart_education_center.Areas.Admin.Controllers
                         }
 
                         model.QuestionTable = dt;
+
+                        wb.Close();
+                        excel.Quit();
+                        Marshal.FinalReleaseComObject(excel);
+                        Marshal.FinalReleaseComObject(wb);
+                        Marshal.FinalReleaseComObject(ws);
 
                         Test testModel = new Test();
                         testModel.GradeVsSubject = _context.GradeVsSubject.Where(x => x.Grade.Grade1 == model.Grade && x.Subject.SubjectName == model.Subject).FirstOrDefault();
@@ -159,9 +159,6 @@ namespace smart_education_center.Areas.Admin.Controllers
                                 }
                             }
                         }
-                        System.Runtime.InteropServices.Marshal.FinalReleaseComObject(excel);
-                        System.Runtime.InteropServices.Marshal.FinalReleaseComObject(wb);
-                        System.Runtime.InteropServices.Marshal.FinalReleaseComObject(ws);
 
                         TempData["ResultCode"] = (int)ResultCode.SUCCESS;
                         TempData["ResultMessage"] = "Added Successfully";
@@ -181,25 +178,39 @@ namespace smart_education_center.Areas.Admin.Controllers
                 TempData["ResultMessage"] = e.ToString();
                 return View(model);
             }
-            
+
         }
 
-        private string ValidateTheFields(OpenExcelViewModel model)
+        private bool ValidateTheFields(OpenExcelViewModel model)
         {
-            using (_context)
+            if (model.Grade == 0)
             {
-                if (_context.Grade.Any(x => x.Grade1 != model.Grade))
-                {
-                    return "grade";
-                }
-                if (_context.Subject.Any(x => x.SubjectName != model.Subject))
-                {
-                    return "subject";
-                }
-                else
-                {
-                    return "success";
-                }
+                TempData["ResultCode"] = (int)ResultCode.FAILED;
+                TempData["ResultMessage"] = "Please insert a grade before upload";
+                return false;
+            }
+            if (model.Subject == "")
+            {
+                TempData["ResultCode"] = (int)ResultCode.FAILED;
+                TempData["ResultMessage"] = "Please insert a subject before upload";
+                return false;
+            }
+            if (model.PaperName == "")
+            {
+                TempData["ResultCode"] = (int)ResultCode.FAILED;
+                TempData["ResultMessage"] = "Please insert a paper name before upload";
+                return false;
+            }
+            if (_context.Grade.Any(x => x.Grade1 == model.Grade) && _context.Subject.Any(x => x.SubjectName != model.Subject))
+            {
+                return true;
+            }
+            else
+            {
+                TempData["ResultCode"] = (int)ResultCode.FAILED;
+                TempData["ResultMessage"] = "Please add the class/subject to the database before uploading the paper."
+                    + " And assign it to the relavant class/subject.";
+                return false;
             }
         }
 

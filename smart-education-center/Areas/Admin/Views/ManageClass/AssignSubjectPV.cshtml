@@ -15,7 +15,7 @@
 
                 <div class="navbar-form div-row" style="position:center">
                     @Html.Label("Select the Grade")
-                    @Html.DropDownListFor(model => model.Grade.Id, ViewBag.Grades as SelectList, "--select--", new { @class = "form-control", @required = "required" })
+                    @Html.DropDownListFor(model => model.GradeId, ViewBag.Grades as SelectList, "--select--", new { @class = "form-control", @required = "required" })
                 </div>
                 @*<div class="navbar-form div-row" style="position:center">
                     @Html.Label("Select the Subject to assign")
@@ -24,7 +24,7 @@
                 
                 <div class="navbar-form div-row" style="position:center">
                     @Html.Label("Select the Subject")
-                        @Html.DropDownListFor(model => model.Grade.Id, ViewBag.Subjects as SelectList, "--select--", new { @class = "form-control", @required = "required" })
+                        @Html.DropDownListFor(model => model.SubjectId, ViewBag.Subjects as SelectList, "--select--", new { @class = "form-control", @required = "required" })
                 </div>
             </div>
             <div class="modal-footer site-theme">
