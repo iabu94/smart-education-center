@@ -154,8 +154,11 @@
     <Content Include="Content\Styles\responsive.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\bg6.png" />
+    <Content Include="Images\books.svg" />
+    <Content Include="Images\earth-globe.svg" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\phone-call.svg" />
+    <Content Include="Images\professor.svg" />
     <Content Include="Images\slider_background.jpg" />
     <Content Include="Images\slider_background_b&amp;w.jpg" />
     <Content Include="Models\CyberSchoolEntitiesDataModel.Context.tt">
@@ -168,6 +171,22 @@
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
       <LastGenOutput>CyberSchoolEntitiesDataModel.cs</LastGenOutput>
     </Content>
+<<<<<<< HEAD
+=======
+    <Content Include="scripts\js\custom.js" />
+    <Content Include="scripts\js\jquery-3.2.1.min.js" />
+    <Content Include="scripts\plugins\animation.gsap.min.js" />
+    <Content Include="scripts\plugins\custom.js" />
+    <Content Include="scripts\plugins\easing.js" />
+    <Content Include="scripts\plugins\jquery.scrollTo.min.js" />
+    <Content Include="scripts\plugins\owl.carousel.js" />
+    <Content Include="scripts\plugins\ScrollMagic.min.js" />
+    <Content Include="scripts\plugins\ScrollToPlugin.min.js" />
+    <Content Include="scripts\plugins\TimelineMax.min.js" />
+    <Content Include="scripts\plugins\TweenMax.min.js" />
+    <Content Include="scripts\styles\bootstrap.min.js" />
+    <Content Include="scripts\styles\popper.js" />
+>>>>>>> 0d018a059bc7ff9f6fa724391964371c3d906892
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -188,6 +207,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AnswerViewModel.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Choice.cs">
       <DependentUpon>CyberSchoolEntitiesDataModel.tt</DependentUpon>
     </Compile>
@@ -286,11 +306,21 @@
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\SEC.pubxml" />
+<<<<<<< HEAD
     <None Include="Properties\PublishProfiles\WebApp.pubxml" />
+=======
+    <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\Login\RegisterStudent.cshtml" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
+>>>>>>> 0d018a059bc7ff9f6fa724391964371c3d906892
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
@@ -298,7 +328,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\ExamPapers\" />
     <Folder Include="fonts\" />
-    <Folder Include="scripts\" />
     <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>

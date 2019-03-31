@@ -1,8 +1,8 @@
 ﻿@model smart_education_center.Models.StudentViewModel
 @{
     Layout = null;
-    ViewBag.Title = "Index";
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,11 +37,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img style="height:30px" src="~/Images/logo.png" /></a>
+                <a class="navbar-brand" href="#"><img style="height:30px" src="~/Images/logo.png" /></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="active"><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -58,7 +58,7 @@
                 <div class="col-xs-3">
                 </div>
                 <div class="col-xs-6">
-                    <h2>Login</h2>
+                    <h2>Register Student</h2>
                 </div>
                 <div class="col-xs-3">
                 </div>
@@ -66,20 +66,48 @@
         </div>
     </div>
 
-    @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+    @using (Html.BeginForm("RegisterStudent", "Login", FormMethod.Post))
     {
         <div class="container-fluid bg-3">
             <div class="row">
                 <div class="col-xs-3 col-sm-4">
                 </div>
                 <div class="col-xs-6 col-sm-4">
+
                     <div class="row">
-                        <label>Username</label>
+                        <label>First Name</label>
                     </div>
                     <div class="row">
-                        @Html.TextBoxFor(model => model.username, new { @placeholder = "Enter Username", @class = "form-control", @required = "required" })
+                        @Html.TextBoxFor(model => model.FirstName, new { @placeholder = "Enter First Name", @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "error" })
+                    </div><br />
+
+                    <div class="row">
+                        <label>Last Name</label>
+                    </div>
+                    <div class="row">
+                        @Html.TextBoxFor(model => model.LastName, new { @placeholder = "Enter First Name", @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "error" })
+                    </div><br />
+
+                    <div class="row">
+                        <label>Email</label>
+                    </div>
+                    <div class="row">
+                        @Html.TextBoxFor(model => model.UserEmail, new {@id="mail", @placeholder = "Enter Email Address", @class = "form-control", @required = "required", @onchange = "validateEmail()" })
+                        <div id="validateMail"></div>    
+                    @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "error" })
+                    </div><br />
+
+                    <div class="row">
+                        <label>username</label>
+                    </div>
+                    <div class="row">
+                        @Html.TextBoxFor(model => model.username, new { @id = "uname", @placeholder = "Enter a username", @class = "form-control", @required = "required", @onkeyup = "validateUname()" })
+                        <div id="validateUsername"></div>
                         @Html.ValidationMessageFor(model => model.username, "", new { @class = "error" })
                     </div><br />
+
                     <div class="row">
                         <label>Password</label>
                     </div>
@@ -88,9 +116,18 @@
                         @Html.ValidationMessageFor(model => model.passHash, "", new { @class = "error" })
                     </div><br />
 
+
+                    <div class="row">
+                        <label>Confirm Password</label>
+                    </div>
+                    <div class="row">
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @placeholder = "Enter Last Name", @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div><br />
+
                     @if (TempData["message"] != null)
                     {
-                        if (TempData["ResultCode"] != null)
+                        if (TempData["ResultCode"].ToString() == "001")
                         {
                             <div class="row">
                                 <center>
@@ -126,14 +163,13 @@
 
                     <div class="row">
                         <center>
-                            <input type="submit" name="submit" value="Login" class="btn btn-info" style="" />
+                            <input type="submit" name="submit" value="Register" class="btn btn-info" style="" />
                         </center>
                     </div>
 
                     <div class="row">
                         <center>
-                            <h5><a href="@Url.Action("ResetPassword","Login")"> Forgot Password?</a></h5>
-                            <h5>New to Cyber School? <a href="@Url.Action("RegisterStudent","Login")"> Join now</a></h5>
+                            <h5>Already have an account? <a href="@Url.Action("Index","Login")"> Login </a></h5>
                         </center>
                     </div><br />
                 </div>
@@ -147,3 +183,59 @@
 
 </body>
 </html>
+
+
+<script>
+    var validateUname = function () {
+        var url = '@Url.Action("ValidateUsername","Login")';
+        var username = document.getElementById("uname").value;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { username: username, id: 1 },
+            success: function (res) {
+                if (username == "") {
+                    document.getElementById('validateUsername').innerHTML = "";
+                }
+                else if (res == true) {
+                    document.getElementById('validateUsername').innerHTML = "<label class=\"text-success\">username is available.</label>";
+                }
+                else if (res == false) {
+                    document.getElementById('validateUsername').innerHTML = "<label class=\"text-danger\">username is unavailable. Try another one</label>";
+                }
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    };
+
+    var validateEmail = function () {
+
+        var url = '@Url.Action("ValidateUsername","Login")';
+        var userMail = document.getElementById("mail").value;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { username: userMail, id: 2 },
+            success: function (res) {
+                if (userMail == "") {
+                    document.getElementById('validateMail').innerHTML = "";
+                }
+                else if (res == true) {
+                    document.getElementById('validateMail').innerHTML = "";
+                }
+                else if (res == false) {
+                    document.getElementById('validateMail').innerHTML = "<label class=\"text-danger\">The email address you provided has been already registered.</label>";
+                }
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+
+    };
+
+</script>
