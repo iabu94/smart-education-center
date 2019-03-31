@@ -204,10 +204,6 @@ namespace smart_education_center.Areas.Admin.Controllers
                 TempData["ResultMessage"] = "Please insert a paper name before upload";
                 return false;
             }
-<<<<<<< HEAD
-=======
-            
->>>>>>> ac8d56c74efc4befb81b925b6385acd0a0c4f3cb
             if (_context.Grade.Any(x => x.Grade1 == model.Grade) && _context.Subject.Any(x => x.SubjectName == model.Subject))
             {
                 var checkDuplicate = _context.Test.Where(x => x.GradeVsSubject.Grade.Grade1 == model.Grade
