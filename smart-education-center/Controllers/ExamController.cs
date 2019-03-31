@@ -168,7 +168,7 @@ namespace smart_education_center.Controllers
                 if (objTestEntry.TokenExpireTime < DateTime.Now)
                 {
                     TempData["message"] = "The exam duration has expired at" + objTestEntry.TokenExpireTime.ToString() + ".";
-                    return RedirectToAction("Index", "Login");
+                    return RedirectToAction("FinalResult", "Exam", new { token = token });
                 }
                 if (questionNumber.GetValueOrDefault() < 1)
                 {
@@ -367,7 +367,11 @@ namespace smart_education_center.Controllers
             using(CyberSchoolEntities context=new CyberSchoolEntities())
             {
                 TestEntry objTestEntry = context.TestEntry.Where(x => x.Token == token).FirstOrDefault();
-
+                if (objTestEntry == null)
+                {
+                    TempData["message"] = "You have invalid token. Please re-login and try again.";
+                    return RedirectToAction("Index", "Login");
+                }
                 int marks = 0;
                 if (objTestEntry.TotalMarks != null)
                 {
