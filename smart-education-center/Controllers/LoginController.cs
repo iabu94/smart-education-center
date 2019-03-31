@@ -23,19 +23,19 @@ namespace smart_education_center.Controllers
         {
             using (CyberSchoolEntities context = new CyberSchoolEntities())
             {
-                    if (context.Student.Any(x => x.username == model.username && x.passHash == model.passHash))
-                    {
-                        Student objStudent = context.Student.Where(o => o.username == model.username && o.passHash == model.passHash).FirstOrDefault();
-                        Session["studentName"] = objStudent.FirstName;
-                        Session["studentID"] = objStudent.Id;
+                if (context.Student.Any(x => x.username == model.username && x.passHash == model.passHash))
+                {
+                    Student objStudent = context.Student.Where(o => o.username == model.username && o.passHash == model.passHash).FirstOrDefault();
+                    Session["studentName"] = objStudent.FirstName;
+                    Session["studentID"] = objStudent.Id;
 
-                        return RedirectToAction("Index", "Exam");
-                    }
-                    else
-                    {
-                        TempData["message"] = "Incorrect Username or Password!";
-                        return View(model);
-                    }
+                    return RedirectToAction("Index", "Exam");
+                }
+                else
+                {
+                    TempData["message"] = "Incorrect Username or Password!";
+                    return View(model);
+                }
             }
         }
 
@@ -157,7 +157,7 @@ namespace smart_education_center.Controllers
                 return false;
             }
         }
-        
+
         public ActionResult RegisterStudent()
         {
             return View();
