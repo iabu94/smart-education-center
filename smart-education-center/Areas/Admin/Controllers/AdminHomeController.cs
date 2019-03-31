@@ -11,6 +11,7 @@ using System.Data;
 using smart_education_center.Models;
 using static smart_education_center.Common.Enum;
 using System.Runtime.InteropServices;
+using System.Web.Configuration;
 
 namespace smart_education_center.Areas.Admin.Controllers
 {
@@ -50,15 +51,17 @@ namespace smart_education_center.Areas.Admin.Controllers
                 {
                     if (model.ExcelPaperFile.FileName.EndsWith("xls") || model.ExcelPaperFile.FileName.EndsWith("xlsx"))
                     {
-                        string fileName = "Exam" + DateTime.Now.ToString("yyMMddhhmmss") + Path.GetExtension(model.ExcelPaperFile.FileName);
+                        //string fileName = "Exam" + DateTime.Now.ToString("yyMMddhhmmss") + Path.GetExtension(model.ExcelPaperFile.FileName);
 
-                        model.SavedFileUrl = "~/Areas/Admin/ExamPapers/" + fileName;
+                        //model.SavedFileUrl = WebConfigurationManager.AppSettings["BaseDirectory"] + fileName;
 
-                        fileName = Path.Combine(
-                            Server.MapPath("~/Areas/Admin/ExamPapers/"), fileName);
-                        model.ExcelPaperFile.SaveAs(fileName);
-
-                        wb = excel.Workbooks.Open(fileName);
+                        //fileName = Path.Combine(
+                        //    Server.MapPath(WebConfigurationManager.AppSettings["BaseDirectory"]), fileName);
+                        //model.ExcelPaperFile.SaveAs(fileName);
+                        //(WebConfigurationManager.AppSettings["BaseDirectory"] + model.ExcelPaperFile.FileName);
+                        string path = WebConfigurationManager.AppSettings["BaseDirectory"] + "Paper" + DateTime.Now.ToString("yyMMddhhmmss") + Path.GetExtension(model.ExcelPaperFile.FileName);
+                        model.ExcelPaperFile.SaveAs(path);
+                        wb = excel.Workbooks.Open(path);
                         ws = wb.Worksheets[1];
 
                         model.Grade = ws.Cells[1, 6].value2 == null ? 0 : Convert.ToInt32(ws.Cells[1, 6].value2);
@@ -117,8 +120,8 @@ namespace smart_education_center.Areas.Admin.Controllers
                         testModel.TestName = model.PaperName;
                         testModel.PaperPart = model.PaperPart;
                         testModel.DurationInMinutes = model.PaperTime;
-                        testModel.IsActive = 1;
-                        testModel.IsDeleted = 0;
+                        testModel.IsActive = (int)IsActive.YES;
+                        testModel.IsDeleted = (int)IsDeleted.NO;
 
                         testModel.TestDescription = "x";
 
@@ -131,7 +134,7 @@ namespace smart_education_center.Areas.Admin.Controllers
                             question.TestId = testModel.Id;
                             question.QuestionNumber = Convert.ToInt32(row["Question Number"]);
                             question.Question1 = row["Question"].ToString();
-                            question.PointsOfQuestion = Convert.ToDouble(row["Points"]);
+                            question.PointsOfQuestion = row["Points"] == null ? 1 : Convert.ToDouble(row["Points"]);
 
                             question.IsActive = (int)IsActive.YES;
                             question.IsDeleted = (int)IsDeleted.NO;
@@ -146,8 +149,8 @@ namespace smart_education_center.Areas.Admin.Controllers
                                 choices.QuestionId = question.Id;
                                 choices.ChoiceLabel = row["Choice " + i].ToString();
                                 choices.ChoiceNumber = i;
-                                choices.IsActive = 1;
-                                choices.IsDeleted = 0;
+                                choices.IsActive = (int)IsActive.YES;
+                                choices.IsDeleted = (int)IsDeleted.NO;
 
                                 _context.Choice.Add(choices);
                                 _context.SaveChanges();
@@ -201,9 +204,25 @@ namespace smart_education_center.Areas.Admin.Controllers
                 TempData["ResultMessage"] = "Please insert a paper name before upload";
                 return false;
             }
+<<<<<<< HEAD
+=======
+            
+>>>>>>> ac8d56c74efc4befb81b925b6385acd0a0c4f3cb
             if (_context.Grade.Any(x => x.Grade1 == model.Grade) && _context.Subject.Any(x => x.SubjectName == model.Subject))
             {
-                return true;
+                var checkDuplicate = _context.Test.Where(x => x.GradeVsSubject.Grade.Grade1 == model.Grade
+                && x.GradeVsSubject.Subject.SubjectName == model.Subject && x.TestName == model.PaperName).FirstOrDefault();
+
+                if (checkDuplicate == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    TempData["ResultCode"] = (int)ResultCode.FAILED;
+                    TempData["ResultMessage"] = "The paper for the selected class is already exists.";
+                    return false;
+                }
             }
             else
             {
