@@ -201,7 +201,7 @@ namespace smart_education_center.Areas.Admin.Controllers
                 TempData["ResultMessage"] = "Please insert a paper name before upload";
                 return false;
             }
-            if (_context.Grade.Any(x => x.Grade1 == model.Grade) && _context.Subject.Any(x => x.SubjectName != model.Subject))
+            if (_context.Grade.Any(x => x.Grade1 == model.Grade) && _context.Subject.Any(x => x.SubjectName == model.Subject))
             {
                 return true;
             }
