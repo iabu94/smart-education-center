@@ -52,16 +52,17 @@ namespace smart_education_center.Areas.Admin.Controllers
                         _context.Student.Add(student);
                         _context.SaveChanges();
                     }
-                    
+
                 }
                 return RedirectToAction("Index");
             }
             catch (Exception e)
             {
+                TempData["ResultMessage"] = e.ToString();
                 return RedirectToAction("Index");
             }
 
-            
+
         }
 
         public ActionResult AddTeacher()
@@ -73,6 +74,6 @@ namespace smart_education_center.Areas.Admin.Controllers
         {
             return PartialView("AddAdminPV");
         }
-        
+
     }
 }

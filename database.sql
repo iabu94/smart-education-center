@@ -81,7 +81,9 @@ create table Student(
 	LastName varchar(50),
 	RegisteredDate date,
 	username varchar(50),
-	passHash varchar(50)
+	passHash varchar(50),
+	Email varchar(200),
+	ResetPassCode varchar(200)
 );
 
 create table TestEntry(
@@ -114,3 +116,6 @@ ADD LessonNumber int;
 
 ALTER TABLE GradeVsSubject
 ADD Description varchar(200);
+
+ALTER TABLE Student
+ADD ResetPassCode varchar(200);

@@ -27,6 +27,8 @@ namespace smart_education_center.Models
         public Nullable<System.DateTime> RegisteredDate { get; set; }
         public string username { get; set; }
         public string passHash { get; set; }
+        public string Email { get; set; }
+        public string ResetPassCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestEntry> TestEntry { get; set; }
