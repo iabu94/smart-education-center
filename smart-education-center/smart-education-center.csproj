@@ -157,10 +157,7 @@
     <Content Include="Images\logo.png" />
     <Content Include="Images\phone-call.svg" />
     <Content Include="Images\slider_background.jpg" />
-<<<<<<< HEAD
     <Content Include="Images\slider_background_b&amp;w.jpg" />
-=======
->>>>>>> 8f7f6773a5f33f9b37d55b7c7aaf020b923057d4
     <Content Include="Models\CyberSchoolEntitiesDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
@@ -171,7 +168,9 @@
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
       <LastGenOutput>CyberSchoolEntitiesDataModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -277,11 +276,8 @@
     <Content Include="Areas\Admin\Views\ManageClass\AddClassPV.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AddSubjectPV.cshtml" />
     <Content Include="Areas\Admin\Views\ManageClass\AssignSubjectPV.cshtml" />
-<<<<<<< HEAD
     <Content Include="Areas\Admin\Views\ManagePeople\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManagePeople\AddStudentPV.cshtml" />
-=======
->>>>>>> 8f7f6773a5f33f9b37d55b7c7aaf020b923057d4
     <EntityDeploy Include="Models\CyberSchoolEntitiesDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CyberSchoolEntitiesDataModel.Designer.cs</LastGenOutput>
@@ -289,6 +285,8 @@
     <Content Include="Models\CyberSchoolEntitiesDataModel.edmx.diagram">
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\SEC.pubxml" />
+    <None Include="Properties\PublishProfiles\WebApp.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
