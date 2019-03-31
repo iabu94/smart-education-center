@@ -30,36 +30,46 @@
         }
     </style>
 </head>
-<body>
+<body onload="QuestionsNumbersShow()">
 
     <div class="jumbotron" style="border-bottom:2px solid black;">
         <div class="container text-center">
             <div class="row">
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px; height:80px;">
                     <h3 style="font-size:2vw;">Grade @Model.Grade</h3>
+                    @*<label>Grade @Model.Grade</label>*@
                 </div>
-                <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px;">
-                    <h3 style="font-size:2vw;">@Model.SubjectName</h3>
+                @*<div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px;">
+                        <h3 style="font-size:2vw;">@Model.SubjectName</h3>
+                    </div>*@
+                <div class="col-xs-8 col-sm-8">
+                    @*<h3 style="font-size:2vw;">@Model.TestName</h3>*@
+                    <div style="border:groove; border-radius:12px;">
+                        <label>@(Model.SubjectName) - Paper @(Model.PaperPart)</label>
+                    </div>
+                    <div style="border:groove; border-radius:12px;">
+                        <label>@Model.TestName</label>
+                    </div>
                 </div>
-                <div class="col-xs-4 col-sm-4" style="border:groove; border-radius:12px;">
-                    <h3 style="font-size:2vw;">@Model.TestName</h3>
-                </div>
-                <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px;">
+                @*<div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px;">
 
-                    @if (Model.PaperPart == 1)
-                    {
-                        <h3 style="font-size:2vw;">Paper I</h3>
-                    }
-                    else
-                    {
-                        <h3 style="font-size:2vw;">Paper II</h3>
-                    }
+                        @if (Model.PaperPart == 1)
+                        {
+                            <h3 style="font-size:2vw;">Paper I</h3>
+                        }
+                        else
+                        {
+                            <h3 style="font-size:2vw;">Paper II</h3>
+                        }
 
-                </div>
+                    </div>*@
                 <div class="col-xs-2 col-sm-2" style="border:groove; border-radius:12px; height:80px;">
                     <h3 style="font-size:2vw;">
                         <span id="horRemaining"></span> : <span id="minRemaining"></span> : <span id="secRemaining"></span>
                     </h3>
+                    @*<label>
+                            <span id="horRemaining"></span> : <span id="minRemaining"></span> : <span id="secRemaining"></span>
+                        </label>*@
                 </div>
             </div>
         </div>
@@ -80,7 +90,7 @@
                 <div class="col-xs-1 col-sm-1 text-center">
                     <h1 style="border:1px solid black; border-radius:12px; font-size:2vw;">@(Model.QuestionNumber)</h1>
                 </div>
-                <div class="col-xs-11 col-sm-9" style="border-left:2px solid black;">
+                <div class="col-xs-11 col-sm-7" style="border-left:2px solid black; font-size:larger">
                     <div>
                         @(Model.Question1)
                         <br /><br />
@@ -124,7 +134,7 @@
                         <div class="col-xs-8 col-sm-10" style="border-top:1px solid black;">
                             <br />
                             <center>
-                                <a href="javascript:void(0);" onclick="QuestionsNumbers();" class="btn btn-default" style="color:black;border:1px solid black;border-radius:12px;">Summary</a>
+                                <a href="javascript:void(0);" onclick="QuestionsNumbers();" class="btn btn-default" id="SummaryButton" style="color:black;border:1px solid black;border-radius:12px;">Summary</a>
                             </center>
                         </div>
                         <div class="col-xs-2 col-sm-1" style="border-top:1px solid black;">
@@ -140,6 +150,40 @@
                             }
                         </div>
                     </div>
+                </div>
+                @*QNumbers*@
+                <div class="col-sm-2" id="QNumber" style="border-left:2px solid black;">
+                    @for (int i = 0; i < Model.QuestionCount; i++)
+                    {
+                        <div class="col-sm-3" style="padding-top:2px;">
+                            @*<div style="padding-top:2px;">*@
+                            @*<a href="@Url.Action("ViewQuestion", "Exam", new { questionNumber = i + 1, token = TempData["token"]})" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>*@
+                            @if (Model.AnswerList != null)
+                            {
+                            if (Model.AnswerList.Any(x => x.QuestionNumber == (i + 1)))
+                            {
+                            if (Model.AnswerList.Where(x => x.QuestionNumber == (i + 1)).Select(o => o.ChoiceID).FirstOrDefault() < 1)
+                            {
+                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                            }
+                            else
+                            {
+                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>
+                            }
+                            }
+                            else
+                            {
+                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                            }
+
+                            }
+                            else
+                            {
+                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                            }
+                            @*</div>*@
+                        </div>
+                    }
                 </div>
             </div>
             <br />
@@ -176,7 +220,7 @@
         //Question numbers Popup Model
         <div class="modal fade" id="questionsPopupModal">
             <div class="modal-dialog">
-                <div class="modal-content" style="background-color:#d9dbdd;border-radius:12px;">
+                <div class="modal-content" style="background-color:#d9dbdd; border-radius:12px;">
                     <div class="modal-body site-theme-model" id="popupModalBodyDiv">
                         <div class="modal-header site-theme" style="background-color:#d9dbdd">
                             <h4 class="modal-title pull-left">Summary</h4>
@@ -189,34 +233,34 @@
                                     @for (int i = 0; i < Model.QuestionCount; i++)
                                     {
                                         @*<div style="padding-top:2px;">*@
-                                            @*<a href="@Url.Action("ViewQuestion", "Exam", new { questionNumber = i + 1, token = TempData["token"]})" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>*@
-                                            if (Model.AnswerList != null)
-                                            {
-                                                if (Model.AnswerList.Any(x => x.QuestionNumber == (i + 1)))
-                                                {
-                                                    if (Model.AnswerList.Where(x => x.QuestionNumber == (i + 1)).Select(o => o.ChoiceID).FirstOrDefault() < 1)
-                                                    {
-                                                        <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
-                                                }
-
-                                            }
-                                            else
+                                        @*<a href="@Url.Action("ViewQuestion", "Exam", new { questionNumber = i + 1, token = TempData["token"]})" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>*@
+                                    if (Model.AnswerList != null)
+                                    {
+                                        if (Model.AnswerList.Any(x => x.QuestionNumber == (i + 1)))
+                                        {
+                                            if (Model.AnswerList.Where(x => x.QuestionNumber == (i + 1)).Select(o => o.ChoiceID).FirstOrDefault() < 1)
                                             {
                                                 <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
                                             }
-                                            if ((i+1) % 10 == 0)
+                                            else
                                             {
-                                                <br /><br />
+                                                <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>
                                             }
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                                    }
+                                    if ((i + 1) % 10 == 0)
+                                    {
+                                        <br /><br />
+                                        }
                                         @*</div>*@
                                     }
                                 </div>
@@ -315,5 +359,15 @@
     var QuestionsNumbers = function () {
 
         $("#questionsPopupModal").modal('show');
+    }
+
+    function QuestionsNumbersShow(){
+        if(screen.width>=768){
+            $("#QNumber").show();
+            $("#SummaryButton").hide();
+        }else{
+            $("#QNumber").hide();
+            $("#SummaryButton").show();
+        }
     }
 </script>
