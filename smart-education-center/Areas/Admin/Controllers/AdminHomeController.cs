@@ -133,6 +133,7 @@ namespace smart_education_center.Areas.Admin.Controllers
                         testModel.TestName = model.PaperName;
                         testModel.PaperPart = model.PaperPart;
                         testModel.DurationInMinutes = model.PaperTime;
+                        testModel.PaperCreator = model.UploaderName;
                         testModel.IsActive = (int)IsActive.YES;
                         testModel.IsDeleted = (int)IsDeleted.NO;
 

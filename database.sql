@@ -41,6 +41,7 @@ create table Test(
 	TestName varchar(200),
 	PaperPart int,
 	DurationInMinutes int,
+	PaperCreator varchar(100),
 	TestDescription varchar(100),
 	IsActive int,
 	IsDeleted int,
@@ -110,4 +111,6 @@ insert into Subject values ('ENGL','English','English',1,0),('SCI','Science','Sc
 insert into GradeVsSubject values (6,2);
 
 insert into Lesson values (1,'Science Lesson 1','Lesson 1'),(1,'Science Lesson 2','Lesson 2');
+
+alter table Test add PaperCreator varchar(100)
 
