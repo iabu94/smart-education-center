@@ -160,26 +160,26 @@
                             @*<a href="@Url.Action("ViewQuestion", "Exam", new { questionNumber = i + 1, token = TempData["token"]})" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>*@
                             @if (Model.AnswerList != null)
                             {
-                            if (Model.AnswerList.Any(x => x.QuestionNumber == (i + 1)))
-                            {
-                            if (Model.AnswerList.Where(x => x.QuestionNumber == (i + 1)).Select(o => o.ChoiceID).FirstOrDefault() < 1)
-                            {
-                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
-                            }
-                            else
-                            {
-                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)">@(i + 1)</a>
-                            }
-                            }
-                            else
-                            {
-                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
-                            }
+                                if (Model.AnswerList.Any(x => x.QuestionNumber == (i + 1)))
+                                {
+                                    if (Model.AnswerList.Where(x => x.QuestionNumber == (i + 1)).Select(o => o.ChoiceID).FirstOrDefault() < 1)
+                                    {
+                                        <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)"><small>@(i + 1)</small></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid black;" id="btnID@(i + 1)"><small>@(i + 1)</small></a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)"><small>@(i + 1)</small></a>
+                                }
 
                             }
                             else
                             {
-                            <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)">@(i + 1)</a>
+                                <a href="javascript:void(0);" onclick="saveGo(@(i+1));" class="btn @(Model.QuestionNumber==(i+1)?"btn-primary":"btn-default")" style="color:black;border:1px solid red;" id="btnID@(i + 1)"><small>@(i + 1)</small></a>
                             }
                             @*</div>*@
                         </div>
@@ -363,8 +363,8 @@
 
     function QuestionsNumbersShow(){
         if(screen.width>=768){
-            $("#QNumber").show();
             $("#SummaryButton").hide();
+            $("#QNumber").show();
         }else{
             $("#QNumber").hide();
             $("#SummaryButton").show();
