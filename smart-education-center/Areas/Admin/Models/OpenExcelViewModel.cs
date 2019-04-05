@@ -24,6 +24,8 @@ namespace smart_education_center.Areas.Admin.Models
 
         public int PaperTime { get; set; }
 
+        public string UploaderName { get; set; }
+
         public DataTable QuestionTable { get; set; }
     }
 }

@@ -16,30 +16,38 @@
             <li class="breadcrumb-item active">Home</li>
         </ol>
         @Html.HiddenFor(x => x.QuestionTable)
-        <div class="row">
 
-            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+            <div class="row">
                 <div class="col-sm-12">
                     @Html.HiddenFor(Model => Model.QuestionTable)
                     @Html.LabelFor(x => x.ExcelPaperFile, "Upload Question Paper with an Excel file :")
                     @Html.TextBoxFor(x => x.ExcelPaperFile, new { type = "file", @class = "required" })
-                    <button class="btn btn-sm btn-primary" type="submit">Upload</button>
+                    <button class="btn btn-sm btn-primary" type="submit">Upload</button><br />
+
                     @Html.Raw("<div class=\"text-danger\">" + TempData["ErrorMessage"] + "</div>")
                 </div>
-            }
 
-        </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-3">Paper Creator : </label>
+                @Html.TextBoxFor(x => x.UploaderName, new { @class = "form-control col-sm-6 required", @placeholder="Enter the Name" }) <br />
+            </div>
+        }
+
+        <br />
 
         @if (TempData["ResultMessage"] != null && TempData["ResultMessage"].ToString() == "Added Successfully")
         {
             <div class="container">
                 <div class="row">
                     <div class="col-sm-2">
-                        @Html.LabelFor(x => x.Grade) 
+                        @Html.LabelFor(x => x.Grade)
                     </div>
                     <div class="col-sm-4">
-                       : @Html.Label(Model.Grade.ToString())
+                        : @Html.Label(Model.Grade.ToString())
                     </div>
                 </div>
                 <div class="row">
@@ -47,7 +55,7 @@
                         @Html.LabelFor(x => x.Subject)
                     </div>
                     <div class="col-sm-4">
-                      :  @Html.Label(Model.Subject.ToString())
+                        :  @Html.Label(Model.Subject.ToString())
                     </div>
                 </div>
                 <div class="row">
@@ -55,7 +63,7 @@
                         @Html.LabelFor(x => x.PaperName)
                     </div>
                     <div class="col-sm-4">
-                       : @Html.Label(Model.PaperName.ToString())
+                        : @Html.Label(Model.PaperName.ToString())
                     </div>
                 </div>
                 <div class="row">
@@ -63,7 +71,7 @@
                         @Html.LabelFor(x => x.PaperPart)
                     </div>
                     <div class="col-sm-4">
-                       : @Html.Label(Model.PaperPart.ToString())
+                        : @Html.Label(Model.PaperPart.ToString())
                     </div>
                 </div>
                 <div class="row">
@@ -71,7 +79,7 @@
                         @Html.LabelFor(x => x.PaperTime)
                     </div>
                     <div class="col-sm-4">
-                      : @Html.Label(Model.PaperTime.ToString())
+                        : @Html.Label(Model.PaperTime.ToString())
                     </div>
                 </div>
             </div>
