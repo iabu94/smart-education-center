@@ -147,6 +147,7 @@ namespace smart_education_center.Controllers
 
                 using (var client = new SmtpClient())
                 {
+                    //client.Timeout = 10000;
                     client.Send(mailMessage);
                 }
                 return true;
