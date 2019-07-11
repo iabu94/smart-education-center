@@ -118,7 +118,8 @@ namespace smart_education_center.Areas.Admin.Controllers
                 IQueryable<Grade> dbGradeList = null;
                 dbGradeList = _context.Grade.Where(x => x.IsDeleted == (int)IsDeleted.NO);
                 ViewBag.Grades = new SelectList(dbGradeList, "Id", "Grade1");
-                ViewBag.Subjects = new SelectList(_context.Subject.AsQueryable(), "Id", "SubjectName");
+                //ViewBag.Subjects = new SelectList(_context.Subject.AsQueryable(), "Id", "SubjectName");
+                TempData["Subjects"] = new SelectList(_context.Subject.AsQueryable(), "Id", "SubjectName");
                 return PartialView("AssignSubjectPV");
             }
             catch (Exception e)
@@ -185,17 +186,17 @@ namespace smart_education_center.Areas.Admin.Controllers
         public JsonResult GetSubjectList(int grade)
         {
             var dbSubjectList = _context.Subject.Where(x => x.IsActive == (int)IsActive.YES && x.IsDeleted == (int)IsDeleted.NO).ToList();
-            var dbClassSubjectList = _context.GradeVsSubject.Where(m => m.GradeId == grade).Select(m => m.Subject).ToList();
+            var dbClassSubjectList = _context.GradeVsSubject.Where(m => m.Grade.Grade1 == grade).Select(m => m.Subject).ToList();
 
             foreach (var item in dbClassSubjectList)
             {
                 dbSubjectList.Remove(item);
             }
+            
+            //ViewBag.Subjects = new SelectList(dbSubjectList.AsQueryable(), "Id", "SubjectName");
+            TempData["Subjects"] = new SelectList(dbSubjectList.AsQueryable(), "Id", "SubjectName");
 
-            IQueryable<Subject> resultSubjectList = dbSubjectList.AsQueryable();
-            var resultData = new SelectList(resultSubjectList, "Id", "SubjectName");
-            ViewBag.Subjects = resultData;
-            return Json(resultData, JsonRequestBehavior.AllowGet);
+            return Json(TempData["Subjects"], JsonRequestBehavior.AllowGet);
         }
     }
 }

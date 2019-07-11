@@ -30,6 +30,7 @@ namespace smart_education_center.Models
         public string TestDescription { get; set; }
         public Nullable<int> IsActive { get; set; }
         public Nullable<int> IsDeleted { get; set; }
+        public string PaperCreator { get; set; }
     
         public virtual GradeVsSubject GradeVsSubject { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
