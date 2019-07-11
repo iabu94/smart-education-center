@@ -171,6 +171,8 @@
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
       <LastGenOutput>CyberSchoolEntitiesDataModel.cs</LastGenOutput>
     </Content>
+<<<<<<< HEAD
+=======
     <Content Include="scripts\js\custom.js" />
     <Content Include="scripts\js\jquery-3.2.1.min.js" />
     <Content Include="scripts\plugins\animation.gsap.min.js" />
@@ -184,6 +186,7 @@
     <Content Include="scripts\plugins\TweenMax.min.js" />
     <Content Include="scripts\styles\bootstrap.min.js" />
     <Content Include="scripts\styles\popper.js" />
+>>>>>>> 0d018a059bc7ff9f6fa724391964371c3d906892
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -303,10 +306,14 @@
       <DependentUpon>CyberSchoolEntitiesDataModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\SEC.pubxml" />
+<<<<<<< HEAD
+    <None Include="Properties\PublishProfiles\WebApp.pubxml" />
+=======
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Login\RegisterStudent.cshtml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
+>>>>>>> 0d018a059bc7ff9f6fa724391964371c3d906892
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

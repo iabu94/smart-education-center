@@ -102,15 +102,15 @@ namespace smart_education_center.Areas.Admin.Controllers
                             if (ws.Cells[i, 16].value2==null)
                             {
                                 TempData["ResultCode"] = (int)ResultCode.FAILED;
-                                TempData["ResultMessage"] = "Uploading failed. The correct answer column for the question " + (i-10)/4 + 
-                                    "is not specified. Please recheck and upload";
+                                TempData["ResultMessage"] = "Uploading failed. The correct answer column for the question " + (i-6)/4 + 
+                                    " is not specified. Please recheck and upload";
                                 return View(model);
                             }
                             if (ws.Cells[i, 18].value2 == null)
                             {
                                 TempData["ResultCode"] = (int)ResultCode.FAILED;
-                                TempData["ResultMessage"] = "Uploading failed. The Marks column for the question " + (i - 10) / 4 +
-                                    "is not specified. Please recheck and upload";
+                                TempData["ResultMessage"] = "Uploading failed. The Marks column for the question " + (i - 6) / 4 +
+                                    " is not specified. Please recheck and upload";
                                 return View(model);
                             }
                             dt.Rows.Add(ws.Cells[i, 1].value2, ws.Cells[i, 2].value2,
@@ -218,7 +218,6 @@ namespace smart_education_center.Areas.Admin.Controllers
                 TempData["ResultMessage"] = "Please insert a paper name before upload";
                 return false;
             }
-            
             if (_context.Grade.Any(x => x.Grade1 == model.Grade) && _context.Subject.Any(x => x.SubjectName == model.Subject))
             {
                 var checkDuplicate = _context.Test.Where(x => x.GradeVsSubject.Grade.Grade1 == model.Grade
