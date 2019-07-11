@@ -5,3 +5,7 @@ obj/
 CyberSchoolEntitiesDataModel.Designer.cs
 CyberSchoolEntitiesDataModel.edmx.diagram
 ExamPapers
+.csproj
+CyberSchoolEntitiesDataModel.Designer.cs
+CyberSchoolEntitiesDataModel.edmx
+CyberSchoolEntitiesDataModel.diagram
